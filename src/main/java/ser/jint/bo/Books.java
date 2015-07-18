@@ -69,6 +69,11 @@ public class Books extends Items implements Serializable {
         }
     }
 
+    @Override
+    public String getItemType() {
+        return this.getClass().getSimpleName();
+    }
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");

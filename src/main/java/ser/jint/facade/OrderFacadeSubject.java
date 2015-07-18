@@ -7,6 +7,7 @@ import ser.jint.observer.Observer;
 import ser.jint.observer.Subject;
 import ser.jint.singleton.OrderManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.ListIterator;
 /**
  * Created by Razor15 on 14/07/2015.
  */
-public class OrderFacadeSubject implements Subject {
+public class OrderFacadeSubject implements Subject{
 
     private static OrderFacadeSubject instance;
 

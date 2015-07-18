@@ -1,0 +1,44 @@
+package ser.jint.singleton;
+
+import ser.jint.bo.Items;
+
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Created by Razorback on 18/07/2015.
+ */
+public class ItemManager implements Serializable {
+
+    private List<Items> listItems;
+    private static ItemManager instance;
+
+    private ItemManager(){
+        this.listItems = new LinkedList<Items>();
+    }
+
+    public static ItemManager getItemManager(){
+        if(instance == null){
+            instance = new ItemManager();
+        }
+
+        return instance;
+    }
+
+    public void addItem(Items i){
+        this.listItems.add(i);
+    }
+
+    public void removeItem(Items i){
+        int indx = this.listItems.indexOf(i);
+
+        if(indx >=0){
+            this.listItems.remove(indx);
+        }
+    }
+
+    public List<Items> getListItems(){
+        return this.listItems;
+    }
+}

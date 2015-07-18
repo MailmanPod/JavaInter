@@ -12,6 +12,7 @@ public abstract class Items implements Serializable, Comparable<Items> {
     private double price;
     private double tax;
     private int stock;
+    private String itemType;
 
     public Items(int itemId, String itemDescription, double price, double tax, int stock) {
         this.setItemId(itemId);
@@ -70,6 +71,7 @@ public abstract class Items implements Serializable, Comparable<Items> {
     }
 
     public abstract double getPriceWithTax();
+    public abstract String getItemType();
 
     @Override
     public boolean equals(Object o) {
@@ -106,6 +108,7 @@ public abstract class Items implements Serializable, Comparable<Items> {
         builder.append("######## Item Data #########\n");
         builder.append("Item id: " + this.getItemId() + "\n");
         builder.append("Item Description: " + this.getItemDescription() + "\n");
+        builder.append("Item Type: " + this.getItemType() + "\n");
         builder.append("Item price no tax: " + this.getPrice() + "\n");
         builder.append("Item tax: " + this.getTax() + "\n");
         builder.append("Item price with tax: " + this.getPriceWithTax() + "\n");

@@ -55,6 +55,11 @@ public class Electronic extends Items implements Serializable {
         }
     }
 
+    @Override
+    public String getItemType() {
+        return this.getClass().getSimpleName();
+    }
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.toString());

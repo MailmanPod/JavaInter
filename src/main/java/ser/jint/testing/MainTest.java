@@ -1,9 +1,6 @@
 package ser.jint.testing;
 
-import ser.jint.bo.Electronic;
-import ser.jint.bo.Items;
-import ser.jint.bo.Order;
-import ser.jint.bo.OrderDetail;
+import ser.jint.bo.*;
 import ser.jint.facade.OrderFacadeSubject;
 import ser.jint.singleton.OrderManager;
 

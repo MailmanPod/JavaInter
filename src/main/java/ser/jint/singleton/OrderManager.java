@@ -31,6 +31,14 @@ public final class OrderManager implements Serializable {
         this.orderList.add(newOrder);
     }
 
+    public void removeOrder(Order oldOrder){
+        int indx = this.orderList.indexOf(oldOrder);
+
+        if(indx >= 0){
+            this.orderList.remove(indx);
+        }
+    }
+
     public List<Order> getOrderList() {
         return this.orderList;
     }
