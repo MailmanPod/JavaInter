@@ -65,7 +65,7 @@ public class MainTest {
 
         //System.out.println("Cancelando orden");
         //ofs.cancelOrder(manager.getOrderList());
-        System.out.println("Entregando pedido");
+        System.out.println("Entregando Pedidos realizados");
         ofs.deliveryOrders(manager.getOrderList());
         iter = manager.getOrderList().iterator();
 
