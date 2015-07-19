@@ -11,9 +11,8 @@ import java.util.List;
  */
 public final class OrderManager implements Serializable {
 
-    private List<Order> orderList;
-
     private static OrderManager instance;
+    private List<Order> orderList;
 
     private OrderManager() {
         this.orderList = new LinkedList<Order>();
@@ -31,10 +30,10 @@ public final class OrderManager implements Serializable {
         this.orderList.add(newOrder);
     }
 
-    public void removeOrder(Order oldOrder){
+    public void removeOrder(Order oldOrder) {
         int indx = this.orderList.indexOf(oldOrder);
 
-        if(indx >= 0){
+        if (indx >= 0) {
             this.orderList.remove(indx);
         }
     }

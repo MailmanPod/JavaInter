@@ -147,16 +147,16 @@ public class Order implements Comparable<Order>, Serializable {
         return contextState;
     }
 
+    public void setContextState(String contextState) {
+        this.contextState = contextState;
+    }
+
     public State getCanceledState() {
         return canceledState;
     }
 
     public void setCanceledState(State canceledState) {
         this.canceledState = canceledState;
-    }
-
-    public void setContextState(String contextState) {
-        this.contextState = contextState;
     }
 
     public State getCurrentState() {

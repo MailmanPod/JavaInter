@@ -13,12 +13,6 @@ public abstract class ItemFactory {
     public static final int CLOTHES = 2;
     public static final int ELECTRONIC = 3;
 
-    public abstract Books getBooks();
-
-    public abstract Clothes getClothes();
-
-    public abstract Electronic getElectronic();
-
     public static ItemFactory getItemFactory(int factoryType) {
         switch (factoryType) {
             case BOOKS:
@@ -34,4 +28,10 @@ public abstract class ItemFactory {
                 return null;
         }
     }
+
+    public abstract Books getBooks();
+
+    public abstract Clothes getClothes();
+
+    public abstract Electronic getElectronic();
 }

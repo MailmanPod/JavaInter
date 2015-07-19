@@ -71,6 +71,7 @@ public abstract class Items implements Serializable, Comparable<Items> {
     }
 
     public abstract double getPriceWithTax();
+
     public abstract String getItemType();
 
     @Override

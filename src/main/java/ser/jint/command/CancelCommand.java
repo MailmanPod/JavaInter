@@ -9,7 +9,7 @@ public class CancelCommand implements Command {
 
     private Order order;
 
-    public CancelCommand(Order order){
+    public CancelCommand(Order order) {
         this.order = order;
     }
 

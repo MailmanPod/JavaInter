@@ -42,16 +42,16 @@ public class OrderDetail implements Comparable<OrderDetail>, Serializable {
     public int compareTo(OrderDetail o) {
         int result = 0;
 
-        if(this.getItem().getItemId() > o.getItem().getItemId()){
+        if (this.getItem().getItemId() > o.getItem().getItemId()) {
             result = 1;
-        }else if(this.getItem().getItemId() < o.getItem().getItemId()){
+        } else if (this.getItem().getItemId() < o.getItem().getItemId()) {
             result = -1;
         }
 
         return result;
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Cantidad: " + this.getQuantity() + "\n");
         builder.append("Subtotal: " + this.getDetailTotal() + "\n");

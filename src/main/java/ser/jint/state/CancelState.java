@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by Razorback on 16/07/2015.
  */
-public class CancelState extends OrderStateAdapter implements Serializable{
+public class CancelState extends OrderStateAdapter implements Serializable {
     private Order order;
 
     public CancelState(Order order) {

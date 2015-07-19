@@ -46,10 +46,10 @@ public class DispatchState extends OrderStateAdapter implements Serializable {
             //chargeParams();
         } finally {
             try {
-                if(fos != null){
+                if (fos != null) {
                     fos.close();
 
-                }else if(fis != null){
+                } else if (fis != null) {
                     fis.close();
                 }
             } catch (IOException e) {

@@ -7,7 +7,6 @@ import ser.jint.observer.Observer;
 import ser.jint.observer.Subject;
 import ser.jint.singleton.OrderManager;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.ListIterator;
 /**
  * Created by Razor15 on 14/07/2015.
  */
-public class OrderFacadeSubject implements Subject{
+public class OrderFacadeSubject implements Subject {
 
     private static OrderFacadeSubject instance;
 
@@ -33,8 +32,8 @@ public class OrderFacadeSubject implements Subject{
         this.manager = OrderManager.getInstance();
     }
 
-    public static OrderFacadeSubject getInstance(){
-        if(instance == null){
+    public static OrderFacadeSubject getInstance() {
+        if (instance == null) {
             instance = new OrderFacadeSubject();
         }
 
@@ -74,7 +73,7 @@ public class OrderFacadeSubject implements Subject{
 
     public void dispathOrders(List<Order> orders) {
         Iterator<Order> iter = orders.iterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             Command c = new DispathCommand(iter.next());
             c.changeStatus();
         }
@@ -82,7 +81,7 @@ public class OrderFacadeSubject implements Subject{
 
     public void deliveryOrders(List<Order> orders) {
         Iterator<Order> iter = orders.iterator();
-        while (iter.hasNext()){
+        while (iter.hasNext()) {
             Command command = new DeliveryCommand(iter.next());
             command.changeStatus();
         }
@@ -90,7 +89,7 @@ public class OrderFacadeSubject implements Subject{
 
     public void cancelOrder(List<Order> orders) {
         Iterator<Order> iter = orders.iterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             Command command = new CancelCommand(iter.next());
             command.changeStatus();
         }

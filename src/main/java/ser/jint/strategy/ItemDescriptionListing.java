@@ -1,10 +1,11 @@
 package ser.jint.strategy;
 
 import ser.jint.bo.Items;
+import ser.jint.singleton.ItemManager;
 
 import java.text.Collator;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by Razor15 on 15/07/2015.
@@ -12,16 +13,17 @@ import java.util.List;
 public class ItemDescriptionListing extends ListingStrategyAdapter {
 
     private int listingMode;
+    private ItemManager manager;
 
     public ItemDescriptionListing(int listingMode) {
         this.listingMode = listingMode;
+        this.manager = ItemManager.getInstance();
     }
 
     @Override
-    public List<Items> getItemListing() {
-        return super.getItemListing();
+    public void getItemListing() {
+        Collections.sort(this.manager.getListItems(), new ItemDescriptionComparator());
     }
-
 
     private class ItemDescriptionComparator implements Comparator<Items> {
 

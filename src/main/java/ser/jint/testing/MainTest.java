@@ -1,6 +1,8 @@
 package ser.jint.testing;
 
-import ser.jint.bo.*;
+import ser.jint.bo.Electronic;
+import ser.jint.bo.Order;
+import ser.jint.bo.OrderDetail;
 import ser.jint.facade.OrderFacadeSubject;
 import ser.jint.singleton.OrderManager;
 
@@ -14,7 +16,7 @@ import java.util.List;
  */
 public class MainTest {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         OrderManager manager = OrderManager.getInstance();
         OrderFacadeSubject ofs = OrderFacadeSubject.getInstance();
 
@@ -46,7 +48,7 @@ public class MainTest {
 
         Iterator<Order> iter = manager.getOrderList().iterator();
 
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             Order z = iter.next();
             System.out.println(z);
         }
@@ -55,7 +57,7 @@ public class MainTest {
         ofs.dispathOrders(manager.getOrderList());
         iter = manager.getOrderList().iterator();
 
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             Order z = iter.next();
             System.out.println(z);
         }
@@ -66,7 +68,7 @@ public class MainTest {
         ofs.deliveryOrders(manager.getOrderList());
         iter = manager.getOrderList().iterator();
 
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             Order z = iter.next();
             System.out.println(z);
         }
