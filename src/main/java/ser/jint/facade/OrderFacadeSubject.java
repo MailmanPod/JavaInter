@@ -3,9 +3,13 @@ package ser.jint.facade;
 import ser.jint.bo.Order;
 import ser.jint.bo.OrderDetail;
 import ser.jint.command.*;
+import ser.jint.criteria.ClientNumberCriteria;
+import ser.jint.criteria.Criteria;
+import ser.jint.criteria.DispatchCriteria;
 import ser.jint.observer.Observer;
 import ser.jint.observer.Subject;
 import ser.jint.singleton.OrderManager;
+import ser.jint.strategy.ListingStrategy;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,6 +29,10 @@ public class OrderFacadeSubject implements Subject {
     private List<OrderDetail> dataDetails;
     private OrderManager manager;
     private Command command;
+    private ListingStrategy strategy;
+    private Criteria clientNumberOrders;
+    private Criteria orderNumberOrders;
+    private Criteria dispatchOrders;
 
     private OrderFacadeSubject() {
         this.registeredObservers = new ArrayList<Observer>();
@@ -93,5 +101,32 @@ public class OrderFacadeSubject implements Subject {
             Command command = new CancelCommand(iter.next());
             command.changeStatus();
         }
+    }
+
+    public void setStrategy(ListingStrategy strategy){
+        this.strategy = strategy;
+    }
+
+    public void listOrders(){
+        this.strategy.listOrders();
+    }
+
+    public void listItems(){
+        this.strategy.listItems();
+    }
+
+    public List<Order> cltNmbSearch(int cltNmb){
+        this.clientNumberOrders = new ClientNumberCriteria(cltNmb);
+        return this.clientNumberOrders.matchCriteria(manager.getOrderList());
+    }
+
+    public List<Order> orderNumberSearch(int orderNmb){
+        this.orderNumberOrders = new ClientNumberCriteria(orderNmb);
+        return this.clientNumberOrders.matchCriteria(manager.getOrderList());
+    }
+
+    public List<Order> dispatchCenterSearch(String dispatchCenter){
+        this.dispatchOrders = new DispatchCriteria(dispatchCenter);
+        return this.dispatchOrders.matchCriteria(manager.getOrderList());
     }
 }

@@ -8,7 +8,7 @@ public interface ListingStrategy {
     public static final int ASC = 1;
     public static final int DESC = 2;
 
-    void getOrderListing();
+    void listOrders();
 
-    void getItemListing();
+    void listItems();
 }

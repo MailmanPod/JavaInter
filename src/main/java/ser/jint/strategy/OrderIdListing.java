@@ -19,7 +19,7 @@ public class OrderIdListing extends ListingStrategyAdapter {
     }
 
     @Override
-    public void getOrderListing() {
+    public void listOrders() {
         Collections.sort(manager.getOrderList(), new OrderIdComparator());
     }
 

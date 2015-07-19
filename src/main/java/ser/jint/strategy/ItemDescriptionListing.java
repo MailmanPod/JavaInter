@@ -21,7 +21,7 @@ public class ItemDescriptionListing extends ListingStrategyAdapter {
     }
 
     @Override
-    public void getItemListing() {
+    public void listItems() {
         Collections.sort(this.manager.getListItems(), new ItemDescriptionComparator());
     }
 

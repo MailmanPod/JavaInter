@@ -20,7 +20,7 @@ public class OrderDateListing extends ListingStrategyAdapter {
     }
 
     @Override
-    public void getOrderListing() {
+    public void listOrders() {
         Collections.sort(manager.getOrderList(), new OrderDateComparator());
     }
 

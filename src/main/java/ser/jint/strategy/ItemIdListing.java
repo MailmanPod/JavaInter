@@ -19,7 +19,7 @@ public class ItemIdListing extends ListingStrategyAdapter {
     }
 
     @Override
-    public void getItemListing() {
+    public void listItems() {
         Collections.sort(manager.getListItems(), new IdComaparator());
     }
 
