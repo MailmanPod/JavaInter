@@ -1,11 +1,11 @@
 package ser.jint.strategy;
 
 import ser.jint.bo.Order;
-import ser.jint.singleton.OrderManager;
 
 import java.text.Collator;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Razorback on 18/07/2015.
@@ -13,16 +13,14 @@ import java.util.Comparator;
 public class OrderStateListing extends ListingStrategyAdapter {
 
     private int listingMode;
-    private OrderManager manager;
 
     public OrderStateListing(int listingMode) {
         this.listingMode = listingMode;
-        this.manager = OrderManager.getInstance();
     }
 
     @Override
-    public void listOrders() {
-        Collections.sort(manager.getOrderList(), new OrderStateComparator());
+    public void listOrders(List<Order> list) {
+        Collections.sort(list, new OrderStateComparator());
     }
 
     private class OrderStateComparator implements Comparator<Order> {

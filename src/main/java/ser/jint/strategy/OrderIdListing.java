@@ -1,26 +1,24 @@
 package ser.jint.strategy;
 
 import ser.jint.bo.Order;
-import ser.jint.singleton.OrderManager;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Razorback on 18/07/2015.
  */
 public class OrderIdListing extends ListingStrategyAdapter {
     private int listingMode;
-    private OrderManager manager;
 
     public OrderIdListing(int listingMode) {
         this.listingMode = listingMode;
-        manager = OrderManager.getInstance();
     }
 
     @Override
-    public void listOrders() {
-        Collections.sort(manager.getOrderList(), new OrderIdComparator());
+    public void listOrders(List<Order> list) {
+        Collections.sort(list, new OrderIdComparator());
     }
 
     private class OrderIdComparator implements Comparator<Order> {

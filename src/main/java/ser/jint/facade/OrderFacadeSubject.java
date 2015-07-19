@@ -8,6 +8,7 @@ import ser.jint.criteria.Criteria;
 import ser.jint.criteria.DispatchCriteria;
 import ser.jint.observer.Observer;
 import ser.jint.observer.Subject;
+import ser.jint.singleton.ItemManager;
 import ser.jint.singleton.OrderManager;
 import ser.jint.strategy.ListingStrategy;
 
@@ -27,7 +28,8 @@ public class OrderFacadeSubject implements Subject {
     private Observer createCommand;
     private Order dataOrder;
     private List<OrderDetail> dataDetails;
-    private OrderManager manager;
+    private OrderManager orderManager;
+    private ItemManager itemManager;
     private Command command;
     private ListingStrategy strategy;
     private Criteria clientNumberOrders;
@@ -37,7 +39,7 @@ public class OrderFacadeSubject implements Subject {
     private OrderFacadeSubject() {
         this.registeredObservers = new ArrayList<Observer>();
         this.createCommand = new CreateCommand(this);
-        this.manager = OrderManager.getInstance();
+        this.orderManager = OrderManager.getInstance();
     }
 
     public static OrderFacadeSubject getInstance() {
@@ -108,25 +110,25 @@ public class OrderFacadeSubject implements Subject {
     }
 
     public void listOrders(){
-        this.strategy.listOrders();
+        this.strategy.listOrders(this.orderManager.getOrderList());
     }
 
     public void listItems(){
-        this.strategy.listItems();
+        this.strategy.listItems(this.itemManager.getItemsList());
     }
 
     public List<Order> cltNmbSearch(int cltNmb){
         this.clientNumberOrders = new ClientNumberCriteria(cltNmb);
-        return this.clientNumberOrders.matchCriteria(manager.getOrderList());
+        return this.clientNumberOrders.matchCriteria(orderManager.getOrderList());
     }
 
     public List<Order> orderNumberSearch(int orderNmb){
         this.orderNumberOrders = new ClientNumberCriteria(orderNmb);
-        return this.clientNumberOrders.matchCriteria(manager.getOrderList());
+        return this.clientNumberOrders.matchCriteria(orderManager.getOrderList());
     }
 
     public List<Order> dispatchCenterSearch(String dispatchCenter){
         this.dispatchOrders = new DispatchCriteria(dispatchCenter);
-        return this.dispatchOrders.matchCriteria(manager.getOrderList());
+        return this.dispatchOrders.matchCriteria(orderManager.getOrderList());
     }
 }

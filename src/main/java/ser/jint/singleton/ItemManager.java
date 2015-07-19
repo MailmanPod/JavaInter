@@ -38,7 +38,7 @@ public class ItemManager implements Serializable {
         }
     }
 
-    public List<Items> getListItems() {
+    public List<Items> getItemsList() {
         return this.listItems;
     }
 }

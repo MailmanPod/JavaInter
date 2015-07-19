@@ -1,26 +1,24 @@
 package ser.jint.strategy;
 
 import ser.jint.bo.Items;
-import ser.jint.singleton.ItemManager;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Razorback on 18/07/2015.
  */
 public class ItemIdListing extends ListingStrategyAdapter {
     private int listingMode;
-    private ItemManager manager;
 
     public ItemIdListing(int listingMode) {
         this.listingMode = listingMode;
-        manager = ItemManager.getInstance();
     }
 
     @Override
-    public void listItems() {
-        Collections.sort(manager.getListItems(), new IdComaparator());
+    public void listItems(List<Items> list) {
+        Collections.sort(list, new IdComaparator());
     }
 
     private class IdComaparator implements Comparator<Items> {
