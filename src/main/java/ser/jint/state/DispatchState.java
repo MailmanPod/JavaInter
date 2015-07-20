@@ -27,40 +27,38 @@ public class DispatchState extends OrderStateAdapter implements Serializable {
         }
     }
 
-    private void createProps() {
+    private void createProps() throws IOException {
         File file = new File(FILE_NAME);
-        FileOutputStream fos = null;
-        FileInputStream fis = null;
+        BufferedWriter bufferW = null;
+        BufferedReader bufferR = null;
 
         try {
             if (!file.exists()) {
-                fos = new FileOutputStream(file);
-                props.store(fos, null);
+                bufferW = new BufferedWriter(new FileWriter(file));
+                props.store(bufferW, null);
             } else {
-                fis = new FileInputStream(file);
-                props.load(fis);
+                bufferR = new BufferedReader(new FileReader(file));
+                props.load(bufferR);
             }
 
         } catch (IOException ex) {
-            ex.printStackTrace();
-            //chargeParams();
+            chargeParams();
         } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-
-                } else if (fis != null) {
-                    fis.close();
-                }
-            } catch (IOException e) {
-                throw new UnsupportedOperationException();
+            if (bufferR != null) {
+                bufferR.close();
+            } else if (bufferW != null) {
+                bufferW.close();
             }
         }
     }
 
     @Override
     public void assignDispatchCenter() {
-        createProps();
+        try {
+            createProps();
+        } catch (IOException e) {
+            chargeParams();
+        }
         int random = (int) (Math.random() * this.props.keySet().toArray().length - 1);
         this.orderContext.setDispatchCenter(this.props.getProperty(String.valueOf(this.props.keySet().toArray()[random])));
 
