@@ -1,5 +1,6 @@
 package ser.jint.bo;
 
+import ser.jint.persistence.CsvWriter;
 import ser.jint.state.*;
 
 import java.io.Serializable;
@@ -242,6 +243,40 @@ public class Order implements Comparable<Order>, Serializable {
         int result = 53 * hash + Objects.hashCode(this.orderNumber);
 
         return result;
+    }
+
+    public String persistenceString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.getClientName());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getClientIdentificationType());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getClientIdentificationNumber());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getOrderNumber());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getOrderAddress());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getOrderZipAddress());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getDispatchCenter());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.isDelivered());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.isCanceled());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getContextState());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append("#" + this.getCurrentState().getClass().getSimpleName() + "#");
+        builder.append(CsvWriter.SEPARATOR);
+
+        Iterator<OrderDetail> iterator = this.getOrderDetails().iterator();
+
+        while (iterator.hasNext()) {
+            builder.append(iterator.next().persistenceString());
+        }
+
+        return builder.toString();
     }
 
     public String toString() {

@@ -1,5 +1,7 @@
 package ser.jint.bo;
 
+import ser.jint.persistence.CsvWriter;
+
 import java.io.Serializable;
 
 /**
@@ -49,6 +51,21 @@ public class OrderDetail implements Comparable<OrderDetail>, Serializable {
         }
 
         return result;
+    }
+
+    public String persistenceString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("#" + this.getClass().getSimpleName() + "#");
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getQuantity());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getDetailTotal());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getDetailQuantity());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getItem().persistenceString());
+
+        return builder.toString();
     }
 
     public String toString() {

@@ -1,5 +1,7 @@
 package ser.jint.bo;
 
+import ser.jint.persistence.CsvWriter;
+
 import java.io.Serializable;
 
 /**
@@ -53,6 +55,18 @@ public class Electronic extends Items implements Serializable {
         } else {
             return (this.getPrice() * this.getTax()) * 2.5;
         }
+    }
+
+    @Override
+    public String persistenceString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(super.persistenceString());
+        builder.append(this.getType());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getMark());
+        builder.append(CsvWriter.LINE_SEPARATOR);
+
+        return builder.toString();
     }
 
     @Override

@@ -4,8 +4,11 @@ import ser.jint.bo.Electronic;
 import ser.jint.bo.Order;
 import ser.jint.bo.OrderDetail;
 import ser.jint.facade.OrderFacadeSubject;
+import ser.jint.persistence.CsvWriter;
+import ser.jint.singleton.ItemManager;
 import ser.jint.singleton.OrderManager;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,7 +19,7 @@ import java.util.List;
  */
 public class MainTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         OrderManager manager = OrderManager.getInstance();
         OrderFacadeSubject ofs = OrderFacadeSubject.getInstance();
 
@@ -72,5 +75,36 @@ public class MainTest {
             Order z = iter.next();
             System.out.println(z);
         }
+
+        ItemManager managerItem = ItemManager.getInstance();
+
+        Electronic rh = new Electronic();
+
+        rh.setStock(89);
+        rh.setTax(0.21);
+        rh.setPrice(3000.00);
+        rh.setItemDescription("Samsung Gxy 6 LTE");
+        rh.setMark("Samsung");
+        rh.setType("GSM LTE");
+        rh.setItemId(200568);
+
+        managerItem.addItem(rh);
+
+        rh = new Electronic();
+
+        rh.setStock(99);
+        rh.setTax(0.21);
+        rh.setPrice(1500.00);
+        rh.setItemDescription("LG G3 LTE");
+        rh.setMark("LGE");
+        rh.setType("GSM LTE");
+        rh.setItemId(200568);
+
+        managerItem.addItem(rh);
+
+        CsvWriter csv = new CsvWriter();
+        csv.persistItems();
+
+        csv.persistOrders();
     }
 }

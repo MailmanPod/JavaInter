@@ -1,5 +1,7 @@
 package ser.jint.bo;
 
+import ser.jint.persistence.CsvWriter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -101,6 +103,24 @@ public abstract class Items implements Serializable, Comparable<Items> {
         } else {
             return 0;
         }
+    }
+
+    public String persistenceString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("#" + this.getItemType() + "#");
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getItemId());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getItemDescription());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getPrice());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getTax());
+        builder.append(CsvWriter.SEPARATOR);
+        builder.append(this.getStock());
+        builder.append(CsvWriter.SEPARATOR);
+
+        return builder.toString();
     }
 
     public String toString() {
