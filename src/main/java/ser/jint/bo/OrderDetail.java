@@ -1,13 +1,14 @@
 package ser.jint.bo;
 
 import ser.jint.persistence.CsvWriter;
+import ser.jint.persistence.Persistable;
 
 import java.io.Serializable;
 
 /**
  * Created by Razorback on 09/07/2015.
  */
-public class OrderDetail implements Comparable<OrderDetail>, Serializable {
+public class OrderDetail implements Comparable<OrderDetail>, Serializable, Persistable {
 
     private Items item;
     private int quantity;

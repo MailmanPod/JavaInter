@@ -1,6 +1,7 @@
 package ser.jint.bo;
 
 import ser.jint.persistence.CsvWriter;
+import ser.jint.persistence.Persistable;
 import ser.jint.state.*;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Objects;
 /**
  * Created by Razorback on 09/07/2015.
  */
-public class Order implements Comparable<Order>, Serializable {
+public class Order implements Comparable<Order>, Serializable, Persistable {
 
     private String clientName;
     private String clientIdentificationType;

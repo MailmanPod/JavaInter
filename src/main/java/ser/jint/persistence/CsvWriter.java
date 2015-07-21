@@ -31,35 +31,22 @@ public class CsvWriter {
     public void persistItems() throws IOException {
         Iterator<Items> iterator = this.itemManager.getItemsList().iterator();
 
-        try {
-            this.bufferedWriter = new BufferedWriter(new FileWriter((new File(FILE_NAME_ITEM))));
-
-            while (iterator.hasNext()) {
-                this.bufferedWriter.write(iterator.next().persistenceString());
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            bufferedWriter.close();
+        while (iterator.hasNext()) {
+            persist(iterator.next(), FILE_NAME_ITEM);
         }
+
+    }
+
+    private void persist(Persistable persistable, String fileName) throws IOException {
+        this.bufferedWriter = new BufferedWriter(new FileWriter((new File(fileName))));
+        this.bufferedWriter.write(persistable.persistenceString());
     }
 
     public void persistOrders() throws IOException {
         Iterator<Order> iterator = this.orderManager.getOrderList().iterator();
 
-        try {
-            this.bufferedWriter = new BufferedWriter(new FileWriter((new File(FILE_NAME_ORDER))));
-
-            while (iterator.hasNext()) {
-                this.bufferedWriter.write(iterator.next().persistenceString());
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            bufferedWriter.close();
+        while (iterator.hasNext()) {
+            persist(iterator.next(), FILE_NAME_ORDER);
         }
-
     }
 }

@@ -1,6 +1,7 @@
 package ser.jint.bo;
 
 import ser.jint.persistence.CsvWriter;
+import ser.jint.persistence.Persistable;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
 /**
  * Created by Razor15 on 08/07/2015.
  */
-public abstract class Items implements Serializable, Comparable<Items> {
+public abstract class Items implements Serializable, Comparable<Items>, Persistable {
     private int itemId;
     private String itemDescription;
     private double price;
