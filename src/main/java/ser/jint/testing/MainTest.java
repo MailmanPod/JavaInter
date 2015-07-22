@@ -112,10 +112,18 @@ public class MainTest {
 
         Object lk = Class.forName("ser.jint.bo." + "Electronic").newInstance();
 
-        Method m = lk.getClass().getMethod("setMark", String.class);
+        //Method m = lk.getClass().getMethod("setMark", String.class);
 
-        m.invoke(lk, "Pulenta");
+        Method[] methods = lk.getClass().getMethods();
 
-        System.out.println(lk.toString());
+        for (Method p : methods) {
+            if (p.getName().startsWith("set")) {
+                System.out.println("Method Name: " + p.getName().contains("Type") + ">>>>>" + p.getParameters()[0].toString());
+            }
+        }
+
+        //m.invoke(lk, "Pulenta");
+
+        //System.out.println(lk.toString());
     }
 }
