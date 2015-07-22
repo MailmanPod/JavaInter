@@ -9,6 +9,8 @@ import ser.jint.singleton.ItemManager;
 import ser.jint.singleton.OrderManager;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,7 +21,7 @@ import java.util.List;
  */
 public class MainTest {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         OrderManager manager = OrderManager.getInstance();
         OrderFacadeSubject ofs = OrderFacadeSubject.getInstance();
 
@@ -106,5 +108,15 @@ public class MainTest {
         csv.persistItems();
 
         csv.persistOrders();
+
+
+        Object lk = Class.forName("ser.jint.bo." + "Electronic").newInstance();
+
+        for (Method method : lk.getClass().getMethods()) {
+            System.out.println((method.getName().startsWith("set")) ? method.getName() : "");
+            System.out.println((method.getName().startsWith("set")) ? method.invoke(method.getName(), "Marca Pulenta") : "no es setter");
+        }
+
+        System.out.println(lk.toString());
     }
 }
