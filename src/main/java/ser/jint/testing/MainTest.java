@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class MainTest {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
         OrderManager manager = OrderManager.getInstance();
         OrderFacadeSubject ofs = OrderFacadeSubject.getInstance();
 
@@ -112,10 +112,9 @@ public class MainTest {
 
         Object lk = Class.forName("ser.jint.bo." + "Electronic").newInstance();
 
-        for (Method method : lk.getClass().getMethods()) {
-            System.out.println((method.getName().startsWith("set")) ? method.getName() : "");
-            System.out.println((method.getName().startsWith("set")) ? method.invoke(method.getName(), "Marca Pulenta") : "no es setter");
-        }
+        Method m = lk.getClass().getMethod("setMark", String.class);
+
+        m.invoke(lk, "Pulenta");
 
         System.out.println(lk.toString());
     }
