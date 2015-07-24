@@ -25,6 +25,7 @@ public class MainTest {
         OrderManager manager = OrderManager.getInstance();
         OrderFacadeSubject ofs = OrderFacadeSubject.getInstance();
 
+
         Order o = new Order();
         o.setClientIdentificationNumber(34441144);
         o.setClientIdentificationType("DNI");
@@ -32,6 +33,8 @@ public class MainTest {
         o.setOrderAddress("Av Colon 778");
         o.setOrderZipAddress("X500GBY");
         o.setCreationDate(new Date(System.currentTimeMillis()));
+
+        /*########### ITEM NUMBER 1 #############*/
 
         Electronic e = new Electronic();
         e.setStock(89);
@@ -49,6 +52,23 @@ public class MainTest {
         List<OrderDetail> tmp = new LinkedList<OrderDetail>();
         tmp.add(detail);
 
+        /*########### ITEM NUMBER 2 #############*/
+
+        e = new Electronic();
+        e.setStock(89);
+        e.setTax(0.21);
+        e.setPrice(3000.00);
+        e.setItemDescription("LG G3 LTE");
+        e.setMark("LG");
+        e.setType("GSM LTE");
+        e.setItemId(200570);
+
+        detail = new OrderDetail();
+        detail.setItem(e);
+        detail.setQuantity(7);
+
+        tmp.add(detail);
+
         ofs.updateData(o, tmp);
 
         Iterator<Order> iter = manager.getOrderList().iterator();
@@ -58,25 +78,25 @@ public class MainTest {
             System.out.println(z);
         }
 
-        System.out.println("Despachando ordenes");
+        /*System.out.println("Despachando ordenes");
         ofs.dispathOrders(manager.getOrderList());
         iter = manager.getOrderList().iterator();
 
         while (iter.hasNext()) {
             Order z = iter.next();
             System.out.println(z);
-        }
+        }*/
 
         //System.out.println("Cancelando orden");
         //ofs.cancelOrder(manager.getOrderList());
-        System.out.println("Entregando Pedidos realizados");
+        /*System.out.println("Entregando Pedidos realizados");
         ofs.deliveryOrders(manager.getOrderList());
         iter = manager.getOrderList().iterator();
 
         while (iter.hasNext()) {
             Order z = iter.next();
             System.out.println(z);
-        }
+        }*/
 
         ItemManager managerItem = ItemManager.getInstance();
 
@@ -100,7 +120,7 @@ public class MainTest {
         rh.setItemDescription("LG G3 LTE");
         rh.setMark("LGE");
         rh.setType("GSM LTE");
-        rh.setItemId(200568);
+        rh.setItemId(200569);
 
         managerItem.addItem(rh);
 

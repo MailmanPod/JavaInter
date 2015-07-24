@@ -64,7 +64,6 @@ public class Electronic extends Items implements Serializable {
         builder.append(this.getType());
         builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getMark());
-        builder.append(CsvPersistence.LINE_SEPARATOR);
 
         return builder.toString();
     }

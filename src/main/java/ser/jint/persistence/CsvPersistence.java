@@ -22,9 +22,11 @@ public class CsvPersistence {
 
     public void persistObjects(List<? extends Persistable> toSave, String fileName) throws IOException {
         this.bufferedWriter = new BufferedWriter(new FileWriter((new File(fileName))));
+
         Iterator<? extends Persistable> iterator = toSave.iterator();
         while (iterator.hasNext()) {
             this.bufferedWriter.write(iterator.next().persistenceString());
+            this.bufferedWriter.write(CsvPersistence.LINE_SEPARATOR);
         }
 
         this.bufferedWriter.close();
@@ -34,7 +36,7 @@ public class CsvPersistence {
         List<? extends Persistable> objectList = new LinkedList<Persistable>();
         this.bufferedReader = new BufferedReader(new FileReader(new File(fileName)));
 
-        String out = "Start";
+        String out = "";
 
         while (out != null) {
             out = this.bufferedReader.readLine();

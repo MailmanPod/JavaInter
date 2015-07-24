@@ -246,36 +246,74 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
         return result;
     }
 
-    public String persistenceString() {
+    private String persistenceOrderConstant() {
         StringBuilder builder = new StringBuilder();
+        builder.append(this.getOrderNumber());
+        builder.append(CsvPersistence.SEPARATOR);
+
         builder.append(this.getClientName());
         builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getClientIdentificationType());
         builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getClientIdentificationNumber());
         builder.append(CsvPersistence.SEPARATOR);
-        builder.append(this.getOrderNumber());
-        builder.append(CsvPersistence.SEPARATOR);
+
         builder.append(this.getOrderAddress());
         builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getOrderZipAddress());
         builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getDispatchCenter());
         builder.append(CsvPersistence.SEPARATOR);
+
         builder.append(this.isDelivered());
         builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.isCanceled());
         builder.append(CsvPersistence.SEPARATOR);
+
+        builder.append(this.getContextState());
+        builder.append(CsvPersistence.SEPARATOR);
+
+        return builder.toString();
+    }
+    public String persistenceString() {
+        StringBuilder builder = new StringBuilder();
+        /*builder.append(this.getOrderNumber());
+        builder.append(CsvPersistence.SEPARATOR);
+
+        builder.append(this.getClientName());
+        builder.append(CsvPersistence.SEPARATOR);
+        builder.append(this.getClientIdentificationType());
+        builder.append(CsvPersistence.SEPARATOR);
+        builder.append(this.getClientIdentificationNumber());
+        builder.append(CsvPersistence.SEPARATOR);
+
+        builder.append(this.getOrderAddress());
+        builder.append(CsvPersistence.SEPARATOR);
+        builder.append(this.getOrderZipAddress());
+        builder.append(CsvPersistence.SEPARATOR);
+        builder.append(this.getDispatchCenter());
+        builder.append(CsvPersistence.SEPARATOR);
+
+        builder.append(this.isDelivered());
+        builder.append(CsvPersistence.SEPARATOR);
+        builder.append(this.isCanceled());
+        builder.append(CsvPersistence.SEPARATOR);
+
         builder.append(this.getContextState());
         builder.append(CsvPersistence.SEPARATOR);
         builder.append("#" + this.getCurrentState().getClass().getSimpleName() + "#");
-        builder.append(CsvPersistence.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);*/
 
         Iterator<OrderDetail> iterator = this.getOrderDetails().iterator();
 
         while (iterator.hasNext()) {
+            builder.append(persistenceOrderConstant());
             builder.append(iterator.next().persistenceString());
+            builder.append(CsvPersistence.SEPARATOR);
+            builder.append(CsvPersistence.LINE_SEPARATOR);
         }
+
+        //builder.append(CsvPersistence.LINE_SEPARATOR);
 
         return builder.toString();
     }
