@@ -1,6 +1,6 @@
 package ser.jint.bo;
 
-import ser.jint.persistence.CsvWriter;
+import ser.jint.persistence.CsvPersistence;
 import ser.jint.persistence.Persistable;
 
 import java.io.Serializable;
@@ -109,17 +109,17 @@ public abstract class Items implements Serializable, Comparable<Items>, Persista
     public String persistenceString() {
         StringBuilder builder = new StringBuilder();
         builder.append("#" + this.getItemType() + "#");
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getItemId());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getItemDescription());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getPrice());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getTax());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getStock());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
 
         return builder.toString();
     }

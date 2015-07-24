@@ -4,7 +4,7 @@ import ser.jint.bo.Electronic;
 import ser.jint.bo.Order;
 import ser.jint.bo.OrderDetail;
 import ser.jint.facade.OrderFacadeSubject;
-import ser.jint.persistence.CsvWriter;
+import ser.jint.persistence.CsvPersistence;
 import ser.jint.singleton.ItemManager;
 import ser.jint.singleton.OrderManager;
 
@@ -104,26 +104,21 @@ public class MainTest {
 
         managerItem.addItem(rh);
 
-        CsvWriter csv = new CsvWriter();
-        csv.persistItems();
+        CsvPersistence csv = new CsvPersistence();
+        csv.persistObjects(ItemManager.getInstance().getItemsList(), CsvPersistence.FILE_NAME_ITEM);
 
-        csv.persistOrders();
+        csv.persistObjects(OrderManager.getInstance().getOrderList(), CsvPersistence.FILE_NAME_ORDER);
 
 
         Object lk = Class.forName("ser.jint.bo." + "Electronic").newInstance();
 
-        //Method m = lk.getClass().getMethod("setMark", String.class);
+        Method m = lk.getClass().getMethod("setMark", String.class);
 
-        Method[] methods = lk.getClass().getMethods();
+        m.invoke(lk, "Pulenta");
 
-        for (Method p : methods) {
-            if (p.getName().startsWith("set")) {
-                System.out.println("Method Name: " + p.getName().contains("Type") + ">>>>>" + p.getParameters()[0].toString());
-            }
-        }
+        System.out.println(lk.toString());
 
-        //m.invoke(lk, "Pulenta");
-
-        //System.out.println(lk.toString());
+        System.out.println("##############################");
+        csv.recreateObjects(CsvPersistence.FILE_NAME_ITEM);
     }
 }

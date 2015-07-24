@@ -1,6 +1,6 @@
 package ser.jint.bo;
 
-import ser.jint.persistence.CsvWriter;
+import ser.jint.persistence.CsvPersistence;
 
 import java.io.Serializable;
 
@@ -62,9 +62,9 @@ public class Electronic extends Items implements Serializable {
         StringBuilder builder = new StringBuilder();
         builder.append(super.persistenceString());
         builder.append(this.getType());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getMark());
-        builder.append(CsvWriter.LINE_SEPARATOR);
+        builder.append(CsvPersistence.LINE_SEPARATOR);
 
         return builder.toString();
     }

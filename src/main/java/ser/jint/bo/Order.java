@@ -1,6 +1,6 @@
 package ser.jint.bo;
 
-import ser.jint.persistence.CsvWriter;
+import ser.jint.persistence.CsvPersistence;
 import ser.jint.persistence.Persistable;
 import ser.jint.state.*;
 
@@ -249,27 +249,27 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
     public String persistenceString() {
         StringBuilder builder = new StringBuilder();
         builder.append(this.getClientName());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getClientIdentificationType());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getClientIdentificationNumber());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getOrderNumber());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getOrderAddress());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getOrderZipAddress());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getDispatchCenter());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.isDelivered());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.isCanceled());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append(this.getContextState());
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
         builder.append("#" + this.getCurrentState().getClass().getSimpleName() + "#");
-        builder.append(CsvWriter.SEPARATOR);
+        builder.append(CsvPersistence.SEPARATOR);
 
         Iterator<OrderDetail> iterator = this.getOrderDetails().iterator();
 
