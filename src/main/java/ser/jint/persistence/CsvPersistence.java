@@ -45,12 +45,13 @@ public class CsvPersistence {
 		List<Persistable> objectList = new LinkedList<Persistable>();
 		this.bufferedReader = new BufferedReader(
 				new FileReader(new File(fileName)));
-		boolean flag = true;
 		
 		String out = "";
 		
 		while (out != null) {
 			out = this.bufferedReader.readLine();
+			
+			System.out.println(out);
 			
 			if (out != null) {
 				String[] tokens = out.split(CsvPersistence.SEPARATOR);
@@ -63,13 +64,13 @@ public class CsvPersistence {
 				
 				String aux = stack.pop();
 				
-				if (aux.startsWith("#") && flag) {
+				if (aux.startsWith("#")) {
 					String classForName = aux.substring(aux.indexOf("#") + 1,
 							aux.lastIndexOf("#"));
 					Persistable p = (Persistable) Class
 							.forName(CsvPersistence.BO_PATH + classForName)
 							.newInstance();
-					flag = false;
+							
 					p.rebuildObject(stack);
 					objectList.add(p);
 				}
