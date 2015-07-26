@@ -8,10 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ser.jint.bo.Electronic;
+import ser.jint.bo.Items;
 import ser.jint.bo.Order;
 import ser.jint.bo.OrderDetail;
 import ser.jint.facade.OrderFacadeSubject;
 import ser.jint.persistence.CsvPersistence;
+import ser.jint.persistence.ObjectSerializer;
 import ser.jint.singleton.ItemManager;
 import ser.jint.singleton.OrderManager;
 
@@ -150,6 +152,35 @@ public class MainTest {
 		
 		while (iterator.hasNext()) {
 			System.out.println(iterator.next().toString());
+		}
+		
+		System.out.println("##############################");
+		List<Items> itemListTest = (List<Items>) csv
+				.recreateObjects(CsvPersistence.FILE_NAME_ITEM);
+				
+		Iterator<Items> iterator1 = itemListTest.iterator();
+		
+		while (iterator1.hasNext()) {
+			System.out.println(iterator1.next().toString());
+		}
+		
+		System.out.println("##############################");
+		ObjectSerializer serializer = new ObjectSerializer();
+		serializer.serializeObjects(OrderManager.getInstance(),
+				ObjectSerializer.SERIAL_ORDER);
+		serializer.serializeObjects(ItemManager.getInstance(),
+				ObjectSerializer.SERIAL_ITEMS);
+				
+		System.out.println("##############################");
+		ObjectSerializer serializer1 = new ObjectSerializer();
+		
+		OrderManager manager1 = (OrderManager) serializer1
+				.deserializeObject(ObjectSerializer.SERIAL_ORDER);
+				
+		Iterator<Order> iterator2 = manager1.getOrderList().iterator();
+		
+		while (iterator2.hasNext()) {
+			System.out.println(iterator2.next().toString());
 		}
 	}
 }
