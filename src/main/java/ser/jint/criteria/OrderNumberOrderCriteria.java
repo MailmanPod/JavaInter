@@ -8,10 +8,10 @@ import ser.jint.bo.Order;
 /**
  * Created by Razorback on 19/07/2015.
  */
-public class OrderNumberCriteria implements Criteria {
+public class OrderNumberOrderCriteria implements OrderCriteria {
 	private int orderNmb;
 	
-	public OrderNumberCriteria(int orderNmb) {
+	public OrderNumberOrderCriteria(int orderNmb) {
 		this.orderNmb = orderNmb;
 	}
 	

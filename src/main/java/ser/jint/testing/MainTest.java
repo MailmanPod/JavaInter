@@ -204,5 +204,10 @@ public class MainTest {
 				System.out.println("Item Sequence: " + st.getNextSequence());
 			}
 		}
+		
+		System.out.println("Using one: "
+				+ OrderAutoSequence.getInstance().getNextSequence());
+		System.out.println("Using two: "
+				+ OrderAutoSequence.getInstance().getNextSequence());
 	}
 }

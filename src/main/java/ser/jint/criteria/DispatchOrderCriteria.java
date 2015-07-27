@@ -1,5 +1,6 @@
 package ser.jint.criteria;
 
+import java.text.Collator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,19 +9,20 @@ import ser.jint.bo.Order;
 /**
  * Created by Razorback on 19/07/2015.
  */
-public class ClientNumberCriteria implements Criteria {
+public class DispatchOrderCriteria implements OrderCriteria {
 	
-	private int clientNmb;
+	private String dispatcher;
 	
-	public ClientNumberCriteria(int nro) {
-		this.clientNmb = nro;
+	public DispatchOrderCriteria(String dispatcher) {
+		this.dispatcher = dispatcher;
 	}
 	
 	public List<Order> matchCriteria(List<Order> entry) {
 		List<Order> matches = new LinkedList<Order>();
+		Collator txtcmp = Collator.getInstance();
 		
 		for (Order e : entry) {
-			if (e.getClientIdentificationNumber() == this.clientNmb) {
+			if (txtcmp.compare(e.getDispatchCenter(), this.dispatcher) == 0) {
 				matches.add(e);
 			}
 		}
