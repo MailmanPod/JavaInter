@@ -332,6 +332,9 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
 		this.setContextState(tokens.pop());
 		
 		String aux = tokens.pop();
+
+		System.out.println("Order: " + aux);
+
 		String classForName = aux.substring(aux.indexOf("#") + 1,
 				aux.lastIndexOf("#"));
 		Constructor cons = Class.forName("ser.jint.state." + classForName)
@@ -341,6 +344,9 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
 		this.setCurrentState(eh);
 		
 		while (!tokens.empty()) {
+			/*System.out.println("Inside of Order Object");
+			System.out.println(tokens);*/
+
 			String cd = tokens.pop();
 			classForName = cd.substring(cd.indexOf("#") + 1,
 					cd.lastIndexOf("#"));

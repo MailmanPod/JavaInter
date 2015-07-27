@@ -54,6 +54,8 @@ public class CsvPersistence {
 		
 		while (out != null) {
 			out = this.bufferedReader.readLine();
+
+			System.out.println(out);
 			
 			if (out != null) {
 				String[] tokens = out.split(CsvPersistence.SEPARATOR);

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Stack;
 
+import ser.jint.persistence.CsvPersistence;
+
 /**
  * Created by Razor15 on 08/07/2015.
  */
@@ -63,12 +65,29 @@ public class Clothes extends Items implements Serializable {
 	public String getItemType() {
 		return this.getClass().getSimpleName();
 	}
-	
+
+	@Override
+	public String persistenceString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(super.persistenceString());
+
+		builder.append(this.getSize());
+		builder.append(CsvPersistence.SEPARATOR);
+
+		builder.append(this.getMark());
+
+		return builder.toString();
+	}
+
 	public void rebuildObject(Stack<String> tokens)
 			throws ClassNotFoundException, IllegalAccessException,
 			InstantiationException, NoSuchMethodException,
 			InvocationTargetException {
-			
+
+		super.rebuildObject(tokens);
+
+		this.setSize(tokens.pop());
+		this.setMark(tokens.pop());
 	}
 	
 	public String toString() {

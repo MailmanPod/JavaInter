@@ -2,9 +2,12 @@ package ser.jint.bo;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Stack;
+
+import ser.jint.persistence.CsvPersistence;
 
 /**
  * Created by Razor15 on 08/07/2015.
@@ -77,12 +80,37 @@ public class Books extends Items implements Serializable {
 	public String getItemType() {
 		return this.getClass().getSimpleName();
 	}
-	
+
+	@Override
+	public String persistenceString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(super.persistenceString());
+
+		builder.append(this.getEditor());
+		builder.append(CsvPersistence.SEPARATOR);
+
+		builder.append(this.getPages());
+		builder.append(CsvPersistence.SEPARATOR);
+
+		builder.append(this.getPublishDate());
+
+		return builder.toString();
+	}
+
 	public void rebuildObject(Stack<String> tokens)
 			throws ClassNotFoundException, IllegalAccessException,
 			InstantiationException, NoSuchMethodException,
 			InvocationTargetException {
-			
+
+		super.rebuildObject(tokens);
+
+		this.setEditor(tokens.pop());
+		this.setPages(new Integer(tokens.pop()));
+		try {
+			this.setPublishDate(new SimpleDateFormat("dd/mm/yyyy").parse(tokens.pop()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String toString() {
@@ -90,11 +118,11 @@ public class Books extends Items implements Serializable {
 		SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
 		
 		builder.append(super.toString());
-		builder.append("########## Books Data #########");
+		builder.append("########## Books Data #########\n");
 		builder.append("Editor name: " + this.getEditor() + "\n");
 		builder.append("Pages: " + this.getPages() + "\n");
 		builder.append("Publish Date: "
-				+ format.format(this.getPublishDate().getTime()));
+				+ format.format(this.getPublishDate().getTime()) + "\n");
 				
 		return builder.toString();
 	}

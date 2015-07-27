@@ -47,6 +47,7 @@ public class OrderFacadeSubject implements Subject {
 		this.registeredObservers = new ArrayList<Observer>();
 		this.createCommand = new CreateCommand(this);
 		this.orderManager = OrderManager.getInstance();
+		this.itemManager = ItemManager.getInstance();
 	}
 	
 	// <editor-fold defaultstate="collapse" desc="Singleton/Facade Pattern">
@@ -59,8 +60,7 @@ public class OrderFacadeSubject implements Subject {
 	}
 	// </editor-fold>
 	
-	// <editor-fold defaultstate="Collapsed" desc="Observer/State Pattern Create
-	// Orders">
+	// <editor-fold defaultstate="Collapsed" desc="Observer/State Pattern Create Orders">
 	public void notifyAllObserver() {
 		ListIterator<Observer> iterator = this.registeredObservers
 				.listIterator();
@@ -94,8 +94,7 @@ public class OrderFacadeSubject implements Subject {
 	}
 	// </editor-fold>
 	
-	// <editor-fold defaultstate="collapsed" desc="Command/State Pattern -
-	// Change State Orders">
+	// <editor-fold defaultstate="collapsed" desc="Command/State Pattern - Change State Orders">
 	public void dispathOrders(List<Order> orders) {
 		Iterator<Order> iter = orders.iterator();
 		while (iter.hasNext()) {
@@ -121,8 +120,7 @@ public class OrderFacadeSubject implements Subject {
 	}
 	// </editor-fold>
 	
-	// <editor-fold defaultstate="collapsed" desc="Strategy Pattern - Listing
-	// Elements">
+	// <editor-fold defaultstate="collapsed" desc="Strategy Pattern - Listing Elements">
 	public void setStrategy(ListingStrategy strategy) {
 		this.strategy = strategy;
 	}
@@ -134,10 +132,18 @@ public class OrderFacadeSubject implements Subject {
 	public void listItems() {
 		this.strategy.listItems(this.itemManager.getItemsList());
 	}
+
+	public List<Order> getOrderList(){
+		return this.orderManager.getOrderList();
+	}
+
+	public List<Items> getItemList(){
+		return this.itemManager.getItemsList();
+	}
+
 	// </editor-fold>
 	
-	// <editor-fold defaultstate="collapsed" desc="Criteria Pattern - Search
-	// Elements">
+	// <editor-fold defaultstate="collapsed" desc="Criteria Pattern - Search Elements">
 	public List<Order> cltNmbSearch(int cltNmb) {
 		this.clientNumberOrders = new ClientNumberOrderCriteria(cltNmb);
 		return this.clientNumberOrders
@@ -174,8 +180,7 @@ public class OrderFacadeSubject implements Subject {
 		}
 	}
 	
-	// <editor-fold defaultstate="collapse" desc="RAW Persistence /
-	// Serialization">
+	// <editor-fold defaultstate="collapse" desc="RAW Persistence / Serialization">
 	public void rawPersistence() throws IOException {
 		CsvPersistence csv = new CsvPersistence();
 		csv.persistObjects(orderManager.getOrderList(),
