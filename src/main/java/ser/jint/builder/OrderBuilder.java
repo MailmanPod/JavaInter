@@ -43,7 +43,7 @@ public class OrderBuilder implements Serializable {
 	}
 	
 	public void buildOrderNumber() {
-		int number = AutoSequence.getInstance().getNextSequence();
+		int number = OrderAutoSequence.getInstance().getNextSequence();
 		
 		this.newOrder.setOrderNumber(number);
 	}

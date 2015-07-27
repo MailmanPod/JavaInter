@@ -11,6 +11,9 @@ import ser.jint.bo.Electronic;
 import ser.jint.bo.Items;
 import ser.jint.bo.Order;
 import ser.jint.bo.OrderDetail;
+import ser.jint.builder.ItemAutoSequence;
+import ser.jint.builder.OrderAutoSequence;
+import ser.jint.builder.Sequencer;
 import ser.jint.facade.OrderFacadeSubject;
 import ser.jint.persistence.CsvPersistence;
 import ser.jint.persistence.ObjectSerializer;
@@ -46,7 +49,7 @@ public class MainTest {
 		e.setItemDescription("Samsung Gxy 6 LTE");
 		e.setMark("Samsung");
 		e.setType("GSM LTE");
-		e.setItemId(200568);
+		e.setItemId(ItemAutoSequence.getInstance().getNextSequence());
 		
 		OrderDetail detail = new OrderDetail();
 		detail.setItem(e);
@@ -64,7 +67,7 @@ public class MainTest {
 		e.setItemDescription("LG G3 LTE");
 		e.setMark("LG");
 		e.setType("GSM LTE");
-		e.setItemId(200570);
+		e.setItemId(ItemAutoSequence.getInstance().getNextSequence());
 		
 		detail = new OrderDetail();
 		detail.setItem(e);
@@ -146,7 +149,8 @@ public class MainTest {
 		
 		System.out.println("##############################");
 		List<Order> orderListTest = (List<Order>) csv
-				.recreateObjects(CsvPersistence.FILE_NAME_ORDER);
+.recreateObjects(
+				CsvPersistence.FILE_NAME_ORDER, CsvPersistence.BO_PATH);
 				
 		Iterator<Order> iterator = orderListTest.iterator();
 		
@@ -156,7 +160,8 @@ public class MainTest {
 		
 		System.out.println("##############################");
 		List<Items> itemListTest = (List<Items>) csv
-				.recreateObjects(CsvPersistence.FILE_NAME_ITEM);
+.recreateObjects(
+				CsvPersistence.FILE_NAME_ITEM, CsvPersistence.BO_PATH);
 				
 		Iterator<Items> iterator1 = itemListTest.iterator();
 		
@@ -181,6 +186,25 @@ public class MainTest {
 		
 		while (iterator2.hasNext()) {
 			System.out.println(iterator2.next().toString());
+		}
+		
+		System.out.println("##############################");
+		csv.persistObjects(CsvPersistence.FILE_NAME_SEQUENCER,
+				OrderAutoSequence.getInstance(),
+				ItemAutoSequence.getInstance());
+		List<Sequencer> list = (List<Sequencer>) csv.recreateObjects(
+				CsvPersistence.FILE_NAME_SEQUENCER, CsvPersistence.AUTO_PATH,
+				true);
+		Iterator<Sequencer> iterator3 = list.iterator();
+		
+		while (iterator3.hasNext()) {
+			Sequencer st = iterator3.next();
+			
+			if (st instanceof OrderAutoSequence) {
+				System.out.println("Order Sequence: " + st.getNextSequence());
+			} else if (st instanceof ItemAutoSequence) {
+				System.out.println("Item Sequence: " + st.getNextSequence());
+			}
 		}
 	}
 }
