@@ -59,8 +59,8 @@ public class OrderFacadeSubject implements Subject {
 	}
 	// </editor-fold>
 	
-	// <editor-fold defaultstate="Collapsed" desc="Observer/State Pattern -
-	// Create Orders">
+	// <editor-fold defaultstate="Collapsed" desc="Observer/State Pattern Create
+	// Orders">
 	public void notifyAllObserver() {
 		ListIterator<Observer> iterator = this.registeredObservers
 				.listIterator();
