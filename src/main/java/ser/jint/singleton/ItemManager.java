@@ -12,10 +12,10 @@ import ser.jint.bo.Items;
 public class ItemManager implements Serializable {
 	
 	private static ItemManager	instance;
-	private List<Items>			listItems;
+	private List<Items>			itemList;
 	
 	private ItemManager() {
-		this.listItems = new LinkedList<Items>();
+		this.itemList = new LinkedList<Items>();
 	}
 	
 	public static ItemManager getInstance() {
@@ -27,18 +27,22 @@ public class ItemManager implements Serializable {
 	}
 	
 	public void addItem(Items i) {
-		this.listItems.add(i);
+		this.itemList.add(i);
 	}
 	
 	public void removeItem(Items i) {
-		int indx = this.listItems.indexOf(i);
+		int indx = this.itemList.indexOf(i);
 		
 		if (indx >= 0) {
-			this.listItems.remove(indx);
+			this.itemList.remove(indx);
 		}
 	}
 	
 	public List<Items> getItemsList() {
-		return this.listItems;
+		return this.itemList;
+	}
+	
+	public void setItemList(List<Items> entry) {
+		this.itemList = entry;
 	}
 }

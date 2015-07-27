@@ -1,7 +1,7 @@
 package ser.jint.criteria;
 
 import java.text.Collator;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import ser.jint.bo.Order;
@@ -18,7 +18,7 @@ public class DispatchOrderCriteria implements OrderCriteria {
 	}
 	
 	public List<Order> matchCriteria(List<Order> entry) {
-		List<Order> matches = new LinkedList<Order>();
+		List<Order> matches = new ArrayList<Order>();
 		Collator txtcmp = Collator.getInstance();
 		
 		for (Order e : entry) {

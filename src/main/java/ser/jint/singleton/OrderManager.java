@@ -41,4 +41,8 @@ public final class OrderManager implements Serializable {
 	public List<Order> getOrderList() {
 		return this.orderList;
 	}
+	
+	public void setOrderList(List<Order> entry) {
+		this.orderList = entry;
+	}
 }

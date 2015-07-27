@@ -199,9 +199,11 @@ public class MainTest {
 			Sequencer st = iterator3.next();
 			
 			if (st instanceof OrderAutoSequence) {
-				System.out.println("Order Sequence: " + st.getNextSequence());
+				System.out.println("Order Sequence: "
+						+ OrderAutoSequence.getInstance().getNextSequence());
 			} else if (st instanceof ItemAutoSequence) {
-				System.out.println("Item Sequence: " + st.getNextSequence());
+				System.out.println("Item Sequence: "
+						+ ItemAutoSequence.getInstance().getNextSequence());
 			}
 		}
 		
