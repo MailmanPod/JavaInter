@@ -148,8 +148,7 @@ public class MainTest {
 		 */
 		
 		System.out.println("##############################");
-		List<Order> orderListTest = (List<Order>) csv
-.recreateObjects(
+		List<Order> orderListTest = (List<Order>) csv.recreateObjects(
 				CsvPersistence.FILE_NAME_ORDER, CsvPersistence.BO_PATH);
 				
 		Iterator<Order> iterator = orderListTest.iterator();
@@ -159,8 +158,7 @@ public class MainTest {
 		}
 		
 		System.out.println("##############################");
-		List<Items> itemListTest = (List<Items>) csv
-.recreateObjects(
+		List<Items> itemListTest = (List<Items>) csv.recreateObjects(
 				CsvPersistence.FILE_NAME_ITEM, CsvPersistence.BO_PATH);
 				
 		Iterator<Items> iterator1 = itemListTest.iterator();

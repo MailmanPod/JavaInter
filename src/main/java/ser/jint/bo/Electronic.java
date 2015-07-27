@@ -84,7 +84,7 @@ public class Electronic extends Items implements Serializable {
 			throws ClassNotFoundException, IllegalAccessException,
 			InstantiationException, NoSuchMethodException,
 			InvocationTargetException {
-
+			
 		super.rebuildObject(tokens);
 		
 		this.setType(tokens.pop());

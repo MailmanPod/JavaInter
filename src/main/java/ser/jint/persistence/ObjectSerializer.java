@@ -7,9 +7,8 @@ import java.io.*;
  */
 public class ObjectSerializer {
 	
-	public static final String	SERIAL_ORDER		= "orders.jdb";
-	public static final String	SERIAL_ITEMS		= "items.jdb";
-	public static final String	SERIAL_SEQUENCER	= "sequence.jdb";
+	public static final String	SERIAL_ORDER	= "orders.jdb";
+	public static final String	SERIAL_ITEMS	= "items.jdb";
 	
 	public void serializeObjects(Serializable object, String type)
 			throws IOException {

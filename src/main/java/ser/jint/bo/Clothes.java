@@ -68,8 +68,7 @@ public class Clothes extends Items implements Serializable {
 			throws ClassNotFoundException, IllegalAccessException,
 			InstantiationException, NoSuchMethodException,
 			InvocationTargetException {
-
-
+			
 	}
 	
 	public String toString() {
