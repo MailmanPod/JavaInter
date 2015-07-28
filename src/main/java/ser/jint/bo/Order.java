@@ -3,6 +3,8 @@ package ser.jint.bo;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import ser.jint.persistence.CsvPersistence;
@@ -271,6 +273,10 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
 		builder.append(this.getOrderZipAddress());
 		builder.append(CsvPersistence.SEPARATOR);
 		
+		builder.append(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+				.format(this.getCreationDate()));
+		builder.append(CsvPersistence.SEPARATOR);
+		
 		builder.append(this.getDispatchCenter());
 		builder.append(CsvPersistence.SEPARATOR);
 		
@@ -298,13 +304,10 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
 		Iterator<OrderDetail> iterator = this.getOrderDetails().iterator();
 		
 		while (iterator.hasNext()) {
-			// builder.append(persistenceOrderConstant());
 			builder.append(iterator.next().persistenceString());
 			builder.append(CsvPersistence.SEPARATOR);
-			// builder.append(CsvPersistence.LINE_SEPARATOR);
+			
 		}
-		
-		builder.append(CsvPersistence.LINE_SEPARATOR);
 		
 		return builder.toString();
 	}
@@ -326,15 +329,23 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
 		
 		this.setOrderAddress(tokens.pop());
 		this.setOrderZipAddress(tokens.pop());
+		
+		try {
+			this.setCreationDate(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+					.parse(tokens.pop()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		this.setDispatchCenter(tokens.pop());
 		this.setDelivered(new Boolean(tokens.pop()));
 		this.setCanceled(new Boolean(tokens.pop()));
 		this.setContextState(tokens.pop());
 		
 		String aux = tokens.pop();
-
+		
 		System.out.println("Order: " + aux);
-
+		
 		String classForName = aux.substring(aux.indexOf("#") + 1,
 				aux.lastIndexOf("#"));
 		Constructor cons = Class.forName("ser.jint.state." + classForName)
@@ -344,9 +355,7 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
 		this.setCurrentState(eh);
 		
 		while (!tokens.empty()) {
-			/*System.out.println("Inside of Order Object");
-			System.out.println(tokens);*/
-
+			
 			String cd = tokens.pop();
 			classForName = cd.substring(cd.indexOf("#") + 1,
 					cd.lastIndexOf("#"));
@@ -369,6 +378,10 @@ public class Order implements Comparable<Order>, Serializable, Persistable {
 		builder.append("Order number: " + this.getOrderNumber() + "\n");
 		builder.append("Order address: " + this.getOrderAddress() + "\n");
 		builder.append("Order zip code:" + this.getOrderZipAddress() + "\n");
+		builder.append("Order creation date: "
+				+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+						.format(this.getCreationDate())
+				+ "\n");
 		builder.append(
 				"Order dispatch center: " + this.getDispatchCenter() + "\n");
 		builder.append("Is Delivered: " + this.isDelivered() + "\n");

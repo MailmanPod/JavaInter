@@ -1,4 +1,2 @@
-#Order#;1001;Damian Bruera;DNI;34441144;Av Colon 778;X500GBY;Centro de Distribucion;false;false;Create;#DispatchState#;#OrderDetail#;2;#Electronic#;100;Samsung Gxy 6 LTE;3000.0;0.21;89;GSM LTE;Samsung;#OrderDetail#;7;#Electronic#;101;LG G3 LTE;3000.0;0.21;89;GSM LTE;LG;
-
-#Order#;1003;Anonim User;DNI;35441188;Av Colon 778;X500GBY;Centro de Distribucion;false;false;Create;#DispatchState#;#OrderDetail#;2;#Books#;102;Book of Pandas;400.0;0.21;4;Editor Books;4500;Sun Jan 12 00:05:00 ART 2014;#OrderDetail#;7;#Clothes#;103;Remera;190.0;0.21;25;XL;Mistral;
-
+#Order#;1000;Damian Bruera;DNI;34441144;Av Colon 778;X500GBY;27/07/2015 22:54:31;Centro de Distribucion;false;false;Create;#DispatchState#;#OrderDetail#;2;#Electronic#;100;Samsung Gxy 6 LTE;3000.0;0.21;89;GSM LTE;Samsung;#OrderDetail#;7;#Electronic#;101;LG G3 LTE;3000.0;0.21;89;GSM LTE;LG;
+#Order#;1001;Anonim User;DNI;35441188;Av Colon 778;X500GBY;27/07/2015 22:54:31;Centro de Distribucion;false;false;Create;#DispatchState#;#OrderDetail#;2;#Books#;102;Book of Pandas;400.0;0.21;4;Editor Books;4500;12/01/2014 00:05:00;#OrderDetail#;7;#Clothes#;103;Remera;190.0;0.21;25;XL;Mistral;

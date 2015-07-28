@@ -125,11 +125,11 @@ public class OrderFacadeSubject implements Subject {
 		this.strategy = strategy;
 	}
 	
-	public void listOrders() {
+	public void strategyOrders() {
 		this.strategy.listOrders(this.orderManager.getOrderList());
 	}
 	
-	public void listItems() {
+	public void strategyItems() {
 		this.strategy.listItems(this.itemManager.getItemsList());
 	}
 

@@ -5,12 +5,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import ser.jint.bo.*;
 import ser.jint.builder.ItemAutoSequence;
-import ser.jint.builder.OrderAutoSequence;
 import ser.jint.facade.OrderFacadeSubject;
+import ser.jint.strategy.ListingStrategy;
+import ser.jint.strategy.OrderStateListing;
 
 /**
  * Created by Razor15 on 16/07/2015.
@@ -24,7 +28,7 @@ public class MainTest {
 		o.setClientName("Damian Bruera");
 		o.setOrderAddress("Av Colon 778");
 		o.setOrderZipAddress("X500GBY");
-		o.setOrderNumber(OrderAutoSequence.getInstance().getNextSequence());
+		// o.setOrderNumber(OrderAutoSequence.getInstance().getNextSequence());
 		o.setCreationDate(new Date(System.currentTimeMillis()));
 		
 		/* ########### ITEM NUMBER 1 ############# */
@@ -72,7 +76,7 @@ public class MainTest {
 		o.setClientName("Anonim User");
 		o.setOrderAddress("Av Colon 778");
 		o.setOrderZipAddress("X500GBY");
-		o.setOrderNumber(OrderAutoSequence.getInstance().getNextSequence());
+		// o.setOrderNumber(OrderAutoSequence.getInstance().getNextSequence());
 		o.setCreationDate(new Date(System.currentTimeMillis()));
 		
 		/* ########### ITEM NUMBER 1 ############# */
@@ -85,7 +89,7 @@ public class MainTest {
 		e.setEditor("Editor Books");
 		e.setPages(4500);
 		
-		DateFormat df = new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Date d = df.parse("12/05/2014");
 		e.setPublishDate(d);
 		e.setItemId(ItemAutoSequence.getInstance().getNextSequence());
@@ -124,11 +128,12 @@ public class MainTest {
 			
 		addOrder1();
 		addOrder2();
-
-		//OrderFacadeSubject.getInstance().serialize();
-		//OrderFacadeSubject.getInstance().deSerialize();
-		OrderFacadeSubject.getInstance().rawPersistence();
-		//OrderFacadeSubject.getInstance().getRawPersistence();
+		
+		// OrderFacadeSubject.getInstance().serialize();
+		// OrderFacadeSubject.getInstance().deSerialize();
+		// OrderFacadeSubject.getInstance().rawPersistence();
+		OrderFacadeSubject.getInstance().getRawPersistence();
+		addOrder2();
 		
 		List<Order> orderListing = OrderFacadeSubject.getInstance()
 				.getOrderList();
@@ -138,6 +143,22 @@ public class MainTest {
 		while (iter.hasNext()) {
 			Order z = iter.next();
 			System.out.println(z);
+		}
+		
+		OrderFacadeSubject.getInstance()
+				.setStrategy(new OrderStateListing(ListingStrategy.DESC));
+		OrderFacadeSubject.getInstance().strategyOrders();
+		
+		orderListing = OrderFacadeSubject.getInstance().getOrderList();
+		
+		iter = orderListing.iterator();
+		
+		while (iter.hasNext()) {
+			Order aux = iter.next();
+			System.out.println("Order: " + aux.getOrderNumber() + " Date: "
+					+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+					.format(aux.getCreationDate())
+					+ " State: " + aux.getContextState());
 		}
 		
 		/*

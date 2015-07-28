@@ -80,34 +80,35 @@ public class Books extends Items implements Serializable {
 	public String getItemType() {
 		return this.getClass().getSimpleName();
 	}
-
+	
 	@Override
 	public String persistenceString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(super.persistenceString());
-
+		
 		builder.append(this.getEditor());
 		builder.append(CsvPersistence.SEPARATOR);
-
+		
 		builder.append(this.getPages());
 		builder.append(CsvPersistence.SEPARATOR);
-
-		builder.append(this.getPublishDate());
-
+		builder.append(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+				.format(this.getPublishDate()));
+				
 		return builder.toString();
 	}
-
+	
 	public void rebuildObject(Stack<String> tokens)
 			throws ClassNotFoundException, IllegalAccessException,
 			InstantiationException, NoSuchMethodException,
 			InvocationTargetException {
-
+			
 		super.rebuildObject(tokens);
-
+		
 		this.setEditor(tokens.pop());
 		this.setPages(new Integer(tokens.pop()));
 		try {
-			this.setPublishDate(new SimpleDateFormat("dd/mm/yyyy").parse(tokens.pop()));
+			this.setPublishDate(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+					.parse(tokens.pop()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -115,15 +116,15 @@ public class Books extends Items implements Serializable {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
 		
 		builder.append(super.toString());
 		builder.append("########## Books Data #########\n");
 		builder.append("Editor name: " + this.getEditor() + "\n");
 		builder.append("Pages: " + this.getPages() + "\n");
-		builder.append("Publish Date: "
-				+ format.format(this.getPublishDate().getTime()) + "\n");
-				
+		builder.append(
+				"Publish Date: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+						.format(this.getPublishDate()) + "\n");
+						
 		return builder.toString();
 	}
 }
