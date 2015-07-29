@@ -15,6 +15,7 @@ import ser.jint.builder.ItemAutoSequence;
 import ser.jint.facade.OrderFacadeSubject;
 import ser.jint.strategy.ListingStrategy;
 import ser.jint.strategy.OrderStateListing;
+import ser.jint.wizardmodels.CreateOrder;
 
 /**
  * Created by Razor15 on 16/07/2015.
@@ -131,8 +132,8 @@ public class MainTest {
 		
 		// OrderFacadeSubject.getInstance().serialize();
 		// OrderFacadeSubject.getInstance().deSerialize();
-		// OrderFacadeSubject.getInstance().rawPersistence();
-		OrderFacadeSubject.getInstance().getRawPersistence();
+		 OrderFacadeSubject.getInstance().rawPersistence();
+		//OrderFacadeSubject.getInstance().getRawPersistence();
 		addOrder2();
 		
 		List<Order> orderListing = OrderFacadeSubject.getInstance()
@@ -160,7 +161,9 @@ public class MainTest {
 					.format(aux.getCreationDate())
 					+ " State: " + aux.getContextState());
 		}
-		
+
+		new CreateOrder().main();
+
 		/*
 		 * System.out.println("Despachando ordenes");
 		 * ofs.dispathOrders(manager.getOrderList()); iter =
