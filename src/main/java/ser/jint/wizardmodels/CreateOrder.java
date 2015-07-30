@@ -23,7 +23,12 @@ public class CreateOrder {
                 WizardOrder wo = new WizardOrder();
                 Wizard wizard = wo.createWizard();
 
-                Rectangle r = new Rectangle(100,100,700,700);
+				Dimension tamPantalla = Toolkit.getDefaultToolkit()
+						.getScreenSize();
+						
+				Rectangle r = new Rectangle((tamPantalla.width - 600) / 2,
+						(tamPantalla.height - 600) / 2, 600, 600);
+						
                 Map prop = new MergeMap("propiedades");
                 prop.put("newOrder", new Order());
 

@@ -15,6 +15,8 @@ public class WizardOrder extends WizardPanelProvider {
     private static final String[] pageNames ={"welcome", "orderData", "orderItem", "finalize"};
     private static final String[] pageTitles ={"Bienvenido", "Datos de la Orden", "Items a comprar", "Finalizado"};
     private static final String generalTitle = "Asistente para la creacion de un pedido de delivery";
+	
+	private OrderWizardPageContent content;
 
     public WizardOrder(){
         super(generalTitle,pageNames, pageTitles);
@@ -22,12 +24,13 @@ public class WizardOrder extends WizardPanelProvider {
 
     @Override
     protected JComponent createPanel(WizardController wizardController, String s, Map map) {
+		this.content = new OrderWizardPageContent(map);
 
         switch(s){
             case "welcome":
-                return new WizardPageContent(map).getWelcomePage();
+				return content.getWelcomePage();
             case "orderData":
-                return new WizardPageContent(map).getOrderDataPage();
+				return content.getOrderDataPage();
             case "orderItem":
                 return new JPanel();
             case "finalize":

@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.netbeans:wizard:0.998">
     <CLASSES>
-      <root url="jar://D:/MvnLocal/org/netbeans/wizard/0.998/wizard-0.998.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/netbeans/wizard/0.998/wizard-0.998.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://D:/MvnLocal/org/netbeans/wizard/0.998/wizard-0.998-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/netbeans/wizard/0.998/wizard-0.998-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://D:/MvnLocal/org/netbeans/wizard/0.998/wizard-0.998-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/netbeans/wizard/0.998/wizard-0.998-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

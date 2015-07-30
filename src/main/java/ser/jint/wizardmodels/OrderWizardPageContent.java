@@ -12,12 +12,12 @@ import ser.jint.bo.Order;
 /**
  * Created by Razor15 on 29/07/2015.
  */
-public class WizardPageContent {
+public class OrderWizardPageContent {
 
     private Map global;
     private Order newOrder;
 
-    public WizardPageContent(Map p){
+	public OrderWizardPageContent(Map p) {
         global = p;
     }
 
@@ -50,14 +50,6 @@ public class WizardPageContent {
 
     public JComponent getOrderDataPage(){
 
-        /*########### OTHER DATA #############*/
-        JLabel lblTitle = new JLabel();
-        lblTitle.setText("Ingrese a continuacion los datos de la orden");
-        JPanel pnlTitle = new JPanel();
-        pnlTitle.setLayout(new GridLayout(1,1));
-
-        pnlTitle.add(lblTitle);
-
         /*########### CLIENT DATA SECTION #########*/
         JLabel lblClientName = new JLabel();
         JLabel lblClientIdNum = new JLabel();
@@ -72,19 +64,25 @@ public class WizardPageContent {
         lblClientIdtype.setText("Ingrese el tipo de documento del cliente");
         lblClientIdNum.setText("Ingrese el numero de documento del cliente");
 
+		// txtClientName.setPreferredSize(new Dimension(100, 20));
+		txtClientName.setMaximumSize(new Dimension(600, 20));
 
         cmbClientIdType.setModel(dcbm);
 
         JPanel pnlClientData = new JPanel();
         pnlClientData.setBorder(BorderFactory.createTitledBorder("Datos del cliente"));
-        pnlClientData.setLayout(new GridLayout(3,2));
+		pnlClientData.setLayout(new BoxLayout(pnlClientData, BoxLayout.Y_AXIS));
 
         pnlClientData.add(lblClientName);
         pnlClientData.add(txtClientName);
 
+		pnlClientData.add(Box.createRigidArea(new Dimension(30, 5)));
+		
         pnlClientData.add(lblClientIdtype);
         pnlClientData.add(cmbClientIdType);
 
+		pnlClientData.add(Box.createRigidArea(new Dimension(30, 5)));
+		
         pnlClientData.add(lblClientIdNum);
         pnlClientData.add(txtClientIdNum);
 
@@ -108,25 +106,30 @@ public class WizardPageContent {
 
         JPanel pnlOrderData = new JPanel();
         pnlOrderData.setBorder(BorderFactory.createTitledBorder("Datos del Pedido"));
-        pnlOrderData.setLayout(new GridLayout(20, 1));
+		pnlOrderData.setLayout(new BoxLayout(pnlOrderData, BoxLayout.Y_AXIS));
 
         pnlOrderData.add(lblOrderAddress);
         pnlOrderData.add(txtOrderAddress);
+		
+		pnlOrderData.add(Box.createRigidArea(new Dimension(30, 5)));
 
         pnlOrderData.add(lblOrderZipAddress);
         pnlOrderData.add(txtOrderZipAddress);
 
+		pnlOrderData.add(Box.createRigidArea(new Dimension(30, 5)));
+		
         pnlOrderData.add(lblOrderCreationDate);
         pnlOrderData.add(txtOrderCreationDate);
+		
+		pnlOrderData.add(Box.createRigidArea(new Dimension(30, 5)));
 
         pnlOrderData.add(lblContactPhone);
         pnlOrderData.add(txtContactPhone);
 
         JPanel conteiner = new JPanel();
-        conteiner.setLayout(new BorderLayout());
-        conteiner.add(pnlTitle, BorderLayout.NORTH);
-        conteiner.add(pnlClientData, BorderLayout.CENTER);
-        conteiner.add(pnlOrderData, BorderLayout.SOUTH);
+		conteiner.setLayout(new BoxLayout(conteiner, BoxLayout.Y_AXIS));
+		conteiner.add(pnlClientData);
+		conteiner.add(pnlOrderData);
 
         return conteiner;
     }
