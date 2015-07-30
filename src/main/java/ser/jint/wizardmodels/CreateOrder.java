@@ -14,6 +14,9 @@ import ser.jint.bo.Order;
  */
 public class CreateOrder {
 
+    private static final int FORM_WIDTH = 650;
+    private static final int FORM_HEIGHT = 650;
+
     public CreateOrder(){
 
     }
@@ -26,8 +29,8 @@ public class CreateOrder {
 				Dimension tamPantalla = Toolkit.getDefaultToolkit()
 						.getScreenSize();
 						
-				Rectangle r = new Rectangle((tamPantalla.width - 600) / 2,
-						(tamPantalla.height - 600) / 2, 600, 600);
+				Rectangle r = new Rectangle((tamPantalla.width - FORM_WIDTH) / 2,
+						(tamPantalla.height - FORM_HEIGHT) / 2, FORM_WIDTH, FORM_HEIGHT);
 						
                 Map prop = new MergeMap("propiedades");
                 prop.put("newOrder", new Order());

@@ -17,6 +17,11 @@ public class OrderWizardPageContent {
     private Map global;
     private Order newOrder;
 
+    private static final Dimension TEXT_ITEM_DIMENSION = new Dimension(250,20);
+    private static final Dimension LABEL_ITEM_DIMENSION = new Dimension(300,20);
+    private static final Dimension COMBO_ITEM_DIMENSION = new Dimension(100,20);
+    private static final Dimension PANEL_RIGID_AREA = new Dimension(30,5);
+
 	public OrderWizardPageContent(Map p) {
         global = p;
     }
@@ -64,8 +69,12 @@ public class OrderWizardPageContent {
         lblClientIdtype.setText("Ingrese el tipo de documento del cliente");
         lblClientIdNum.setText("Ingrese el numero de documento del cliente");
 
-		// txtClientName.setPreferredSize(new Dimension(100, 20));
-		txtClientName.setMaximumSize(new Dimension(600, 20));
+		lblClientName.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+        lblClientIdtype.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+        lblClientIdNum.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+		txtClientName.setMaximumSize(this.TEXT_ITEM_DIMENSION);
+        txtClientIdNum.setMaximumSize(this.TEXT_ITEM_DIMENSION);
+        cmbClientIdType.setMaximumSize(this.COMBO_ITEM_DIMENSION);
 
         cmbClientIdType.setModel(dcbm);
 
@@ -76,12 +85,12 @@ public class OrderWizardPageContent {
         pnlClientData.add(lblClientName);
         pnlClientData.add(txtClientName);
 
-		pnlClientData.add(Box.createRigidArea(new Dimension(30, 5)));
+		pnlClientData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 		
         pnlClientData.add(lblClientIdtype);
         pnlClientData.add(cmbClientIdType);
 
-		pnlClientData.add(Box.createRigidArea(new Dimension(30, 5)));
+		pnlClientData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 		
         pnlClientData.add(lblClientIdNum);
         pnlClientData.add(txtClientIdNum);
@@ -103,6 +112,16 @@ public class OrderWizardPageContent {
 
         txtOrderCreationDate.setEnabled(false);
         txtOrderCreationDate.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(System.currentTimeMillis())));
+        txtOrderCreationDate.setDisabledTextColor(new Color(255, 0, 0));
+
+        lblOrderAddress.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+        lblOrderZipAddress.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+        lblOrderCreationDate.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+        lblContactPhone.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+        txtOrderAddress.setMaximumSize(this.TEXT_ITEM_DIMENSION);
+        txtOrderZipAddress.setMaximumSize(this.TEXT_ITEM_DIMENSION);
+        txtOrderCreationDate.setMaximumSize(this.TEXT_ITEM_DIMENSION);
+        txtContactPhone.setMaximumSize(this.TEXT_ITEM_DIMENSION);
 
         JPanel pnlOrderData = new JPanel();
         pnlOrderData.setBorder(BorderFactory.createTitledBorder("Datos del Pedido"));
@@ -111,26 +130,31 @@ public class OrderWizardPageContent {
         pnlOrderData.add(lblOrderAddress);
         pnlOrderData.add(txtOrderAddress);
 		
-		pnlOrderData.add(Box.createRigidArea(new Dimension(30, 5)));
+		pnlOrderData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 
         pnlOrderData.add(lblOrderZipAddress);
         pnlOrderData.add(txtOrderZipAddress);
 
-		pnlOrderData.add(Box.createRigidArea(new Dimension(30, 5)));
+		pnlOrderData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 		
         pnlOrderData.add(lblOrderCreationDate);
         pnlOrderData.add(txtOrderCreationDate);
 		
-		pnlOrderData.add(Box.createRigidArea(new Dimension(30, 5)));
+		pnlOrderData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 
         pnlOrderData.add(lblContactPhone);
         pnlOrderData.add(txtContactPhone);
 
         JPanel conteiner = new JPanel();
-		conteiner.setLayout(new BoxLayout(conteiner, BoxLayout.Y_AXIS));
+		conteiner.setLayout(new BoxLayout(conteiner, BoxLayout.PAGE_AXIS));
+        conteiner.setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		conteiner.add(pnlClientData);
 		conteiner.add(pnlOrderData);
 
         return conteiner;
+    }
+
+    public JComponent getItemsSelectionPage(){
+        
     }
 }
