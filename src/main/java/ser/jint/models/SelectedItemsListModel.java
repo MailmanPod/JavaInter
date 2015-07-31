@@ -1,5 +1,7 @@
 package ser.jint.models;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -9,19 +11,24 @@ import javax.swing.*;
  */
 public class SelectedItemsListModel extends AbstractListModel {
 	
-	private Vector<String> selectedItems;
+	private Vector<String> items;
+	private Map<String, Integer> selectedItems;
 	
 	public SelectedItemsListModel() {
-		this.selectedItems = new Vector<>();
+		this.selectedItems = new HashMap<>();
+		this.items = new Vector<>();
 	}
 	
-	public void addItem(String item) {
-		this.selectedItems.add(item);
+	public void addItem(String key, Integer value) {
+		this.selectedItems.put(key, value);
+		this.items.add(key);
+		System.out.println("Values for key: " + key + " is: " + this.selectedItems.get(key));
 		updateModel();
 	}
 	
-	public void removeItem(String item) {
-		this.selectedItems.remove(item);
+	public void removeItem(String key) {
+		this.selectedItems.remove(key);
+		this.items.remove(key);
 		updateModel();
 	}
 	
@@ -31,11 +38,11 @@ public class SelectedItemsListModel extends AbstractListModel {
 	
 	@Override
 	public int getSize() {
-		return this.selectedItems.size();
+		return this.items.size();
 	}
 	
 	@Override
 	public Object getElementAt(int index) {
-		return this.selectedItems.get(index);
+		return this.items.get(index);
 	}
 }

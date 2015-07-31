@@ -9,9 +9,10 @@ import javax.swing.*;
  */
 public class SelectItemListAction extends AbstractAction {
 	
-	private SelectedItemsListModel itemsListModel;
+	//private SelectedItemsListModel itemsListModel;
+	private SelectedItemsTableModel itemsListModel;
 	
-	public SelectItemListAction(SelectedItemsListModel itemsListModel) {
+	public SelectItemListAction(SelectedItemsTableModel itemsListModel) {
 		this.itemsListModel = itemsListModel;
 	}
 	
@@ -21,7 +22,11 @@ public class SelectItemListAction extends AbstractAction {
 			JCheckBox ch = (JCheckBox) e.getSource();
 			
 			if (ch.isSelected()) {
-				this.itemsListModel.addItem(ch.getText());
+				String input = JOptionPane.showInputDialog(null,
+						"Ingrese la cantidad a ordenar", "Cantidad",
+						JOptionPane.YES_OPTION);
+
+				this.itemsListModel.addItem(ch.getText(), new Integer(input));
 			} else {
 				this.itemsListModel.removeItem(ch.getText());
 			}

@@ -1,18 +1,23 @@
 package ser.jint.wizardmodels;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
 import ser.jint.bo.Order;
+import ser.jint.models.OtherModels;
 import ser.jint.models.SelectItemListAction;
-import ser.jint.models.SelectedItemsListModel;
+import ser.jint.models.SelectedItemsTableModel;
+import ser.jint.testing.BuildTestingSets;
 
 /**
  * Created by Razor15 on 29/07/2015.
@@ -34,10 +39,16 @@ public class OrderWizardPageContent {
 					new Rectangle(0, 0, c.getWidth(), c.getHeight()));
 		}
 	};
+
+	private static final String[] STRINGS = new String[]{"Libros", "Ropa", "Electronica"};
+
     private Map global;
     private Order newOrder;
 	private Action					itemAction;
-	private SelectedItemsListModel	listModel;
+	private Action comboAction;
+
+	//private SelectedItemsListModel	listModel;
+	private SelectedItemsTableModel listModel;
 
 	public OrderWizardPageContent(Map p) {
         global = p;
@@ -172,28 +183,7 @@ public class OrderWizardPageContent {
     }
 
 	private List<String> getTestItems() {
-		List<String> resultSet = new ArrayList<>();
-		resultSet.add("1 Item");
-		resultSet.add("2 Item");
-		resultSet.add("3 Item");
-		resultSet.add("4 Item");
-		resultSet.add("5 Item");
-		resultSet.add("6 Item");
-		resultSet.add("7 Item");
-		resultSet.add("8 Item");
-		resultSet.add("9 Item");
-		resultSet.add("10 Item");
-		resultSet.add("11 Item");
-		resultSet.add("12 Item");
-		resultSet.add("13 Item");
-		resultSet.add("14 Item");
-		resultSet.add("15 Item");
-		resultSet.add("16 Item");
-		resultSet.add("17 Item");
-		resultSet.add("18 Item");
-		resultSet.add("19 Item");
-		resultSet.add("20 Item");
-		return resultSet;
+		return BuildTestingSets.getItemForList();
 	}
 	
 	private void addItemToList(String name, boolean selected, JPanel target) {
@@ -201,39 +191,84 @@ public class OrderWizardPageContent {
 		check.addActionListener(this.itemAction);
 		
 		if (selected) {
-			this.listModel.addItem(name);
+			this.listModel.addItem(name,0);
 		}
 		check.addFocusListener(this.listFocusListener);
 	}
-	
+
+	private class SelItemComboAction extends AbstractAction {
+		private SelectedItemsTableModel tableModel;
+
+		public SelItemComboAction(SelectedItemsTableModel tableModel)
+		{
+			this.tableModel = tableModel;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JComboBox combo = (JComboBox) e.getSource();
+			int index = combo.getSelectedIndex();
+
+			//System.out.println("Item selected inside the Wizard Class: " + combo.getItemAt(index));
+
+			String in = (String) combo.getItemAt(index);
+			System.out.println(in);
+
+			switch(in){
+				case "Electronica":
+					Iterator<String> iterator = BuildTestingSets.getItemForList().iterator();
+					while(iterator.hasNext()){
+						addItemToList(iterator.next(), true, pnlListItems);
+					}
+					break;
+				case "Libros":
+					Iterator<String> iter = BuildTestingSets.getItemForList1().iterator();
+					while(iter.hasNext()){
+						addItemToList(iter.next(), true, pnlListItems);
+					}
+					break;
+			}
+		}
+	}
+
+	private final JPanel pnlListItems = new JPanel();
     public JComponent getItemsSelectionPage(){
-		JPanel pnlListItems = new JPanel();
+
 		pnlListItems.setLayout(new BoxLayout(pnlListItems, BoxLayout.Y_AXIS));
 		pnlListItems.setMaximumSize(new Dimension(300, 300));
 		
-		this.listModel = new SelectedItemsListModel();
+		//this.listModel = new SelectedItemsListModel();
+		this.listModel = new SelectedItemsTableModel();
+
 		this.itemAction = new SelectItemListAction(this.listModel);
-		
-		Iterator<String> iterator = this.getTestItems().iterator();
-		
-		while (iterator.hasNext()) {
-			addItemToList(iterator.next(), false, pnlListItems);
-		}
-		
+		this.comboAction = new SelItemComboAction(this.listModel);
+
+		JComboBox cmbSelected = new JComboBox();
+		cmbSelected.setModel(new DefaultComboBoxModel(this.STRINGS));
+		cmbSelected.setMaximumSize(this.COMBO_ITEM_DIMENSION);
+		cmbSelected.addActionListener(this.comboAction);
+
 		JScrollPane scrListItems = new JScrollPane(pnlListItems);
 		scrListItems.getVerticalScrollBar().setUnitIncrement(3);
-		scrListItems.setMaximumSize(new Dimension(300, 300));
+		scrListItems.setMaximumSize(new Dimension(300, 280));
 		
 		JPanel pnlContainerList = new JPanel();
 		pnlContainerList
 				.setLayout(new BoxLayout(pnlContainerList, BoxLayout.Y_AXIS));
+		//pnlContainerList.add(Box.createRigidArea(new Dimension(10, 1)));
+		pnlContainerList.add(cmbSelected);
 		pnlContainerList.add(Box.createRigidArea(new Dimension(10, 1)));
 		pnlContainerList.add(scrListItems);
 		
 		JPanel pnlOrderItems = new JPanel();
 		pnlOrderItems.setLayout(new BoxLayout(pnlOrderItems, BoxLayout.Y_AXIS));
-		JList listItems = new JList();
-		listItems.setModel(this.listModel);
+
+		/*JList listItems = new JList();
+		listItems.setModel(this.listModel);*/
+
+		JTable listItems = new JTable(this.listModel);
+		listItems.setColumnModel(OtherModels.createColumnModel());
+		//listItems.setModel();
 		
 		JScrollPane scrOrderPane = new JScrollPane(listItems);
 		scrOrderPane.getVerticalScrollBar().setUnitIncrement(3);
@@ -243,6 +278,7 @@ public class OrderWizardPageContent {
 		
 		JPanel containter = new JPanel();
 		containter.setLayout(new BoxLayout(containter, BoxLayout.X_AXIS));
+
 		containter.add(pnlContainerList);
 		containter.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 		containter.add(pnlOrderItems);
