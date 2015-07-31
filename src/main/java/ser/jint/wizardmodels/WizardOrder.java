@@ -32,7 +32,7 @@ public class WizardOrder extends WizardPanelProvider {
             case "orderData":
 				return content.getOrderDataPage();
             case "orderItem":
-                return new JPanel();
+				return content.getItemsSelectionPage();
             case "finalize":
                 return new JPanel();
         }

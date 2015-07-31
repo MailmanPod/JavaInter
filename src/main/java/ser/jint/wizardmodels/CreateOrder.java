@@ -3,6 +3,8 @@ package ser.jint.wizardmodels;
 import java.awt.*;
 import java.util.Map;
 
+import javax.swing.*;
+
 import org.netbeans.api.wizard.WizardDisplayer;
 import org.netbeans.modules.wizard.MergeMap;
 import org.netbeans.spi.wizard.Wizard;
@@ -23,6 +25,16 @@ public class CreateOrder {
     public void main(){
         Runnable r = new Runnable() {
             public void run() {
+				
+				try {
+					UIManager.setLookAndFeel(
+							UIManager.getSystemLookAndFeelClassName());
+				} catch (ClassNotFoundException | InstantiationException
+						| UnsupportedLookAndFeelException
+						| IllegalAccessException e) {
+					e.printStackTrace();
+				}
+				
                 WizardOrder wo = new WizardOrder();
                 Wizard wizard = wo.createWizard();
 

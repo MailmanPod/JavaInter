@@ -1,26 +1,43 @@
 package ser.jint.wizardmodels;
 
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 
 import ser.jint.bo.Order;
+import ser.jint.models.SelectItemListAction;
+import ser.jint.models.SelectedItemsListModel;
 
 /**
  * Created by Razor15 on 29/07/2015.
  */
 public class OrderWizardPageContent {
 
+	private static final Dimension	TEXT_ITEM_DIMENSION		= new Dimension(250,
+			20);
+	private static final Dimension	LABEL_ITEM_DIMENSION	= new Dimension(300,
+			20);
+	private static final Dimension	COMBO_ITEM_DIMENSION	= new Dimension(100,
+			20);
+	private static final Dimension	PANEL_RIGID_AREA		= new Dimension(30,
+			5);
+	private final FocusListener		listFocusListener		= new FocusAdapter() {
+		public void focusGained(FocusEvent e) {
+			JComponent c = (JComponent) e.getComponent();
+			c.scrollRectToVisible(
+					new Rectangle(0, 0, c.getWidth(), c.getHeight()));
+		}
+	};
     private Map global;
     private Order newOrder;
-
-    private static final Dimension TEXT_ITEM_DIMENSION = new Dimension(250,20);
-    private static final Dimension LABEL_ITEM_DIMENSION = new Dimension(300,20);
-    private static final Dimension COMBO_ITEM_DIMENSION = new Dimension(100,20);
-    private static final Dimension PANEL_RIGID_AREA = new Dimension(30,5);
+	private Action					itemAction;
+	private SelectedItemsListModel	listModel;
 
 	public OrderWizardPageContent(Map p) {
         global = p;
@@ -154,7 +171,82 @@ public class OrderWizardPageContent {
         return conteiner;
     }
 
+	private List<String> getTestItems() {
+		List<String> resultSet = new ArrayList<>();
+		resultSet.add("1 Item");
+		resultSet.add("2 Item");
+		resultSet.add("3 Item");
+		resultSet.add("4 Item");
+		resultSet.add("5 Item");
+		resultSet.add("6 Item");
+		resultSet.add("7 Item");
+		resultSet.add("8 Item");
+		resultSet.add("9 Item");
+		resultSet.add("10 Item");
+		resultSet.add("11 Item");
+		resultSet.add("12 Item");
+		resultSet.add("13 Item");
+		resultSet.add("14 Item");
+		resultSet.add("15 Item");
+		resultSet.add("16 Item");
+		resultSet.add("17 Item");
+		resultSet.add("18 Item");
+		resultSet.add("19 Item");
+		resultSet.add("20 Item");
+		return resultSet;
+	}
+	
+	private void addItemToList(String name, boolean selected, JPanel target) {
+		JCheckBox check = (JCheckBox) target.add(new JCheckBox(name, selected));
+		check.addActionListener(this.itemAction);
+		
+		if (selected) {
+			this.listModel.addItem(name);
+		}
+		check.addFocusListener(this.listFocusListener);
+	}
+	
     public JComponent getItemsSelectionPage(){
-        
+		JPanel pnlListItems = new JPanel();
+		pnlListItems.setLayout(new BoxLayout(pnlListItems, BoxLayout.Y_AXIS));
+		pnlListItems.setMaximumSize(new Dimension(300, 300));
+		
+		this.listModel = new SelectedItemsListModel();
+		this.itemAction = new SelectItemListAction(this.listModel);
+		
+		Iterator<String> iterator = this.getTestItems().iterator();
+		
+		while (iterator.hasNext()) {
+			addItemToList(iterator.next(), false, pnlListItems);
+		}
+		
+		JScrollPane scrListItems = new JScrollPane(pnlListItems);
+		scrListItems.getVerticalScrollBar().setUnitIncrement(3);
+		scrListItems.setMaximumSize(new Dimension(300, 300));
+		
+		JPanel pnlContainerList = new JPanel();
+		pnlContainerList
+				.setLayout(new BoxLayout(pnlContainerList, BoxLayout.Y_AXIS));
+		pnlContainerList.add(Box.createRigidArea(new Dimension(10, 1)));
+		pnlContainerList.add(scrListItems);
+		
+		JPanel pnlOrderItems = new JPanel();
+		pnlOrderItems.setLayout(new BoxLayout(pnlOrderItems, BoxLayout.Y_AXIS));
+		JList listItems = new JList();
+		listItems.setModel(this.listModel);
+		
+		JScrollPane scrOrderPane = new JScrollPane(listItems);
+		scrOrderPane.getVerticalScrollBar().setUnitIncrement(3);
+		scrOrderPane.setMaximumSize(new Dimension(250, 300));
+		
+		pnlOrderItems.add(scrOrderPane);
+		
+		JPanel containter = new JPanel();
+		containter.setLayout(new BoxLayout(containter, BoxLayout.X_AXIS));
+		containter.add(pnlContainerList);
+		containter.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		containter.add(pnlOrderItems);
+		
+		return containter;
     }
 }
