@@ -206,8 +206,8 @@ public class MainTest {
 		 * aux.getContextState()); }
 		 */
 
-		// createItems();
-		OrderFacadeSubject.getInstance().getRawPersistence();
+		createItems();
+		// OrderFacadeSubject.getInstance().getRawPersistence();
 		Iterator<Items> iterator = OrderFacadeSubject.getInstance()
 				.getItemList().iterator();
 		while (iterator.hasNext()) {

@@ -50,7 +50,9 @@ public class CreateOrder {
                 WizardDisplayer.showWizard(wizard, r, null, prop);
             }
         };
-        Thread th = new Thread(r);
-        th.start();
+		/*
+		 * Thread th = new Thread(r); th.start();
+		 */
+		EventQueue.invokeLater(r);
     }
 }
