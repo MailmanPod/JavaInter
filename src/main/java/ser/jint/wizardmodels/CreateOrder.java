@@ -33,7 +33,8 @@ public class CreateOrder {
 				} catch (ClassNotFoundException | InstantiationException
 						| UnsupportedLookAndFeelException
 						| IllegalAccessException e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, e.getMessage(),
+							"Error cargando UI", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				WizardOrder wo = new WizardOrder();
