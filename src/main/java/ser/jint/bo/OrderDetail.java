@@ -33,7 +33,7 @@ public class OrderDetail
 	}
 	
 	public double getDetailTotal() {
-		return this.item.getPrice() * this.getQuantity();
+		return this.item.getPriceWithTax() * this.getQuantity();
 	}
 	
 	public int compareTo(OrderDetail o) {

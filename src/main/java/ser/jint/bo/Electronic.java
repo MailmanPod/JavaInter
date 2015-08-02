@@ -56,9 +56,9 @@ public class Electronic extends Items implements Serializable {
 	@Override
 	public double getPriceWithTax() {
 		if (this.getTax() == 0) {
-			return (this.getPrice() * 2.5);
+			return this.getPrice() + (this.getPrice() * 2.5);
 		} else {
-			return (this.getPrice() * this.getTax()) * 2.5;
+			return this.getPrice() + ((this.getPrice() * this.getTax()) * 2.5);
 		}
 	}
 	

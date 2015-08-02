@@ -70,9 +70,9 @@ public class Books extends Items implements Serializable {
 	@Override
 	public double getPriceWithTax() {
 		if (this.getTax() == 0) {
-			return (this.getPrice() * 1.5);
+			return this.getPrice() + (this.getPrice() * 1.5);
 		} else {
-			return (this.getPrice() * this.getTax()) * 1.5;
+			return this.getPrice() + ((this.getPrice() * this.getTax()) * 1.5);
 		}
 	}
 	

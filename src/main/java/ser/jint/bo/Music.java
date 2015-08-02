@@ -67,9 +67,9 @@ public class Music extends Items implements Serializable {
 	@Override
 	public double getPriceWithTax() {
 		if (this.getTax() == 0) {
-			return (this.getPrice() * 0.5);
+			return this.getPrice() + (this.getPrice() * 0.5);
 		} else {
-			return (this.getPrice() * this.getTax()) * 0.5;
+			return this.getPrice() + ((this.getPrice() * this.getTax()) * 0.5);
 		}
 	}
 	
