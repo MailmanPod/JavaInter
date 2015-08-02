@@ -28,11 +28,11 @@ public class WizardOrder extends WizardPanelProvider {
 
         switch(s){
             case "welcome":
-				return content.getWelcomePage();
+				return content.getWelcomePage(wizardController);
             case "orderData":
-				return content.getOrderDataPage();
+				return content.getOrderDataPage(wizardController);
             case "orderItem":
-				return content.getItemsSelectionPage();
+				return content.getItemsSelectionPage(wizardController);
             case "finalize":
                 return new JPanel();
         }

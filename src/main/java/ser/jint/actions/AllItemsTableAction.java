@@ -38,11 +38,19 @@ public class AllItemsTableAction extends MouseAdapter {
 			if (value) {
 				String qt = JOptionPane.showInputDialog(null,
 						"Ingrese la cantidad deseada", "Cantidad Items",
-						JOptionPane.OK_OPTION);
+						JOptionPane.INFORMATION_MESSAGE);
 						
 				try {
 					Integer q = new Integer(qt);
-					this.selectedItemsListModel.addItem(key, q);
+					
+					if (q > 0) {
+						this.selectedItemsListModel.addItem(key, q);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"La cantidad debe ser mayor a cero",
+								"Cantidad no Valida",
+								JOptionPane.WARNING_MESSAGE);
+					}
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(null, "No ingreso un numero",
 							"Error", JOptionPane.WARNING_MESSAGE);

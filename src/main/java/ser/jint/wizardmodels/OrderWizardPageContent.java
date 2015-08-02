@@ -1,18 +1,20 @@
 package ser.jint.wizardmodels;
 
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
 import javax.swing.*;
 
+import org.netbeans.spi.wizard.WizardController;
+
 import ser.jint.actions.AllItemsTableAction;
 import ser.jint.actions.SelectedItemComboAction;
 import ser.jint.bo.Order;
+import ser.jint.bo.Validator;
 import ser.jint.models.AllItemsTableModel;
 import ser.jint.models.OtherModels;
 import ser.jint.models.SelectedItemsTableModel;
@@ -22,13 +24,13 @@ import ser.jint.models.SelectedItemsTableModel;
  */
 public class OrderWizardPageContent {
 	
-	private static final Dimension	TEXT_ITEM_DIMENSION		= new Dimension(250,
+	private static final Dimension	TEXT_ITEM_DIMENSION		= new Dimension(300,
 			20);
 	private static final Dimension	LABEL_ITEM_DIMENSION	= new Dimension(300,
 			20);
 	private static final Dimension	COMBO_ITEM_DIMENSION	= new Dimension(100,
 			20);
-	private static final Dimension	PANEL_RIGID_AREA		= new Dimension(30,
+	private static final Dimension	PANEL_RIGID_AREA		= new Dimension(50,
 			5);
 	private static final String[]	STRINGS					= new String[] {
 			"Libros", "Ropa", "Electronica" };
@@ -52,7 +54,7 @@ public class OrderWizardPageContent {
 		global = p;
 	}
 	
-	public JComponent getWelcomePage() {
+	public JComponent getWelcomePage(WizardController wizardController) {
 		JLabel lbl1 = new JLabel();
 		lbl1.setText("BIENVENIDO AL ASISTENTE DE CREACION DE UNA NUEVA ORDEN");
 		JPanel pn1 = new JPanel();
@@ -79,15 +81,19 @@ public class OrderWizardPageContent {
 		return container;
 	}
 	
-	public JComponent getOrderDataPage() {
-		
+	public JComponent getOrderDataPage(
+			final WizardController wizardController) {
+			
+		wizardController.setProblem(
+				"No hay valores cargados; Cargar y validar para continuar");
+				
 		/* ########### CLIENT DATA SECTION ######### */
 		JLabel lblClientName = new JLabel();
 		JLabel lblClientIdNum = new JLabel();
 		JLabel lblClientIdtype = new JLabel();
-		JTextField txtClientName = new JTextField();
-		JComboBox cmbClientIdType = new JComboBox();
-		JTextField txtClientIdNum = new JTextField();
+		final JTextField txtClientName = new JTextField();
+		final JComboBox cmbClientIdType = new JComboBox();
+		final JTextField txtClientIdNum = new JTextField();
 		
 		DefaultComboBoxModel dcbm = new DefaultComboBoxModel(
 				new String[] { "DNI", "LE", "Pasaporte", "LC" });
@@ -127,17 +133,17 @@ public class OrderWizardPageContent {
 		JLabel lblOrderAddress = new JLabel();
 		JLabel lblOrderZipAddress = new JLabel();
 		JLabel lblOrderCreationDate = new JLabel();
-		JLabel lblContactPhone = new JLabel();
-		JTextField txtOrderAddress = new JTextField();
-		JTextField txtOrderZipAddress = new JTextField();
-		JTextField txtOrderCreationDate = new JTextField();
-		JTextField txtContactPhone = new JTextField();
+		// JLabel lblContactPhone = new JLabel();
+		final JTextField txtOrderAddress = new JTextField();
+		final JTextField txtOrderZipAddress = new JTextField();
+		final JTextField txtOrderCreationDate = new JTextField();
+		// JTextField txtContactPhone = new JTextField();
 		
 		lblOrderAddress.setText("Ingrese la direccion de entrega del pedido");
 		lblOrderZipAddress
 				.setText("Ingrese el codigo postal de la direccion de entrega");
 		lblOrderCreationDate.setText("Pedido creado el dia");
-		lblContactPhone.setText("Ingrese el numero de telefono de contacto");
+		// lblContactPhone.setText("Ingrese el numero de telefono de contacto");
 		
 		txtOrderCreationDate.setEnabled(false);
 		txtOrderCreationDate.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
@@ -147,11 +153,11 @@ public class OrderWizardPageContent {
 		lblOrderAddress.setMaximumSize(this.LABEL_ITEM_DIMENSION);
 		lblOrderZipAddress.setMaximumSize(this.LABEL_ITEM_DIMENSION);
 		lblOrderCreationDate.setMaximumSize(this.LABEL_ITEM_DIMENSION);
-		lblContactPhone.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+		// lblContactPhone.setMaximumSize(this.LABEL_ITEM_DIMENSION);
 		txtOrderAddress.setMaximumSize(this.TEXT_ITEM_DIMENSION);
 		txtOrderZipAddress.setMaximumSize(this.TEXT_ITEM_DIMENSION);
 		txtOrderCreationDate.setMaximumSize(this.TEXT_ITEM_DIMENSION);
-		txtContactPhone.setMaximumSize(this.TEXT_ITEM_DIMENSION);
+		// txtContactPhone.setMaximumSize(this.TEXT_ITEM_DIMENSION);
 		
 		JPanel pnlOrderData = new JPanel();
 		pnlOrderData.setBorder(
@@ -173,20 +179,86 @@ public class OrderWizardPageContent {
 		
 		pnlOrderData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 		
-		pnlOrderData.add(lblContactPhone);
-		pnlOrderData.add(txtContactPhone);
+		/*
+		 * pnlOrderData.add(lblContactPhone); pnlOrderData.add(txtContactPhone);
+		 */
+		
+		/* ############### VALIDATE BUTTON ################ */
+		JPanel pnlValidator = new JPanel();
+		pnlValidator.setLayout(new BoxLayout(pnlValidator, BoxLayout.Y_AXIS));
+		
+		JButton btnValidator = new JButton("Validar Campos");
+		btnValidator.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String errors = "";
+				int errorCount = 0;
+				
+				if (!Validator.isValidDNI(txtClientIdNum.getText())) {
+					errors = errors + "DNI incorrecto;";
+					errorCount += 1;
+				}
+				
+				if (Validator.isTextEmpty(txtClientName.getText())) {
+					errors = errors + "Nombre Cliente;";
+					errorCount += 1;
+				}
+				
+				if (Validator.isTextEmpty(txtOrderAddress.getText())) {
+					errors = errors + "Direccion de entrega;";
+					errorCount += 1;
+				}
+				
+				if (!Validator.isValidZipCode(txtOrderZipAddress.getText())) {
+					errors = errors + "Codigo Postal Argentino;";
+					errorCount += 1;
+				}
+				
+				if (errorCount > 0) {
+					wizardController.setProblem(errors);
+				} else {
+					wizardController.setProblem(null);
+					
+					newOrder = new Order();
+					newOrder.setClientName(txtClientName.getText());
+					newOrder.setClientIdentificationNumber(
+							new Integer(txtClientIdNum.getText()));
+					newOrder.setClientIdentificationType(
+							(String) cmbClientIdType.getSelectedItem());
+							
+					newOrder.setOrderAddress(txtOrderAddress.getText());
+					newOrder.setOrderZipAddress(txtOrderZipAddress.getText());
+					try {
+						newOrder.setCreationDate(
+								new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+										.parse(txtOrderCreationDate.getText()));
+					} catch (ParseException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage(),
+								"Error en fecha", JOptionPane.ERROR_MESSAGE);
+						wizardController.setProblem(
+								"Error en fecha: " + e1.getMessage());
+					}
+				}
+			}
+		});
+		
+		pnlValidator.add(btnValidator);
 		
 		JPanel conteiner = new JPanel();
-		conteiner.setLayout(new BoxLayout(conteiner, BoxLayout.PAGE_AXIS));
+		conteiner.setLayout(new BoxLayout(conteiner, BoxLayout.Y_AXIS));
 		conteiner.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+		
 		conteiner.add(pnlClientData);
+		conteiner.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
 		conteiner.add(pnlOrderData);
+		conteiner.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		conteiner.add(pnlValidator);
 		
 		return conteiner;
 	}
 	
-	public JComponent getItemsSelectionPage() {
-		
+	public JComponent getItemsSelectionPage(WizardController wizardController) {
 		JPanel pnlListItems = new JPanel();
 		pnlListItems.setLayout(new BoxLayout(pnlListItems, BoxLayout.Y_AXIS));
 		pnlListItems.setMaximumSize(new Dimension(300, 300));
@@ -203,7 +275,6 @@ public class OrderWizardPageContent {
 				
 		JTable tblAllItems = new JTable(this.allItemsTableModel);
 		tblAllItems.setColumnModel(OtherModels.createColumnModelAll());
-		// tblAllItems.getModel().addTableModelListener(this.allItemsTableAction);
 		tblAllItems.addMouseListener(this.allItemsTableAction);
 		
 		JScrollPane scrListItems = new JScrollPane(tblAllItems);
