@@ -6,9 +6,10 @@ import java.util.Iterator;
 
 import javax.swing.*;
 
+import ser.jint.bo.Items;
+import ser.jint.facade.OrderFacadeSubject;
 import ser.jint.models.AllItemsTableModel;
 import ser.jint.models.SelectedItemsTableModel;
-import ser.jint.testing.BuildTestingSets;
 
 /**
  * Created by Razor15 on 31/07/2015.
@@ -34,10 +35,11 @@ public class SelectedItemComboAction extends AbstractAction {
 	}
 	
 	private void clear() {
-		Iterator<String> iterator = BuildTestingSets.getAll().iterator();
-		
+		Iterator<Items> iterator = OrderFacadeSubject.getInstance()
+				.getItemList().iterator();
+				
 		while (iterator.hasNext()) {
-			String aux = iterator.next();
+			String aux = iterator.next().getItemDescription();
 			
 			if (target.containsItem(aux)) {
 				target.removeItem(aux);
@@ -53,25 +55,63 @@ public class SelectedItemComboAction extends AbstractAction {
 		String in = (String) combo.getItemAt(index);
 		
 		switch (in) {
-			case "Electronica":
+			case "Todos":
 				clear();
-				Iterator<String> iterator = BuildTestingSets.getItemForList()
-						.iterator();
+				Iterator<Items> itemsIterator = OrderFacadeSubject.getInstance()
+						.getItemList().iterator();
+						
+				while (itemsIterator.hasNext()) {
+					Items aux = itemsIterator.next();
+					addItemToList(aux.getItemDescription(), this.tableModel
+							.containsKey(aux.getItemDescription()));
+				}
+				break;
+			case "Musica":
+				String typeR = ItemTypes.values()[0].getItemType();
+				clear();
+				Iterator<Items> iterator = OrderFacadeSubject.getInstance()
+						.itemTypeSearch(typeR).iterator();
 				while (iterator.hasNext()) {
-					String axu = iterator.next();
-					addItemToList(axu, this.tableModel.containsKey(axu));
+					Items axu = iterator.next();
+					addItemToList(axu.getItemDescription(), this.tableModel
+							.containsKey(axu.getItemDescription()));
+				}
+				break;
+			case "Electronica":
+				String typeE = ItemTypes.values()[1].getItemType();
+				clear();
+				Iterator<Items> iter = OrderFacadeSubject.getInstance()
+						.itemTypeSearch(typeE).iterator();
+				while (iter.hasNext()) {
+					String aux = iter.next().getItemDescription();
+					addItemToList(aux, this.tableModel.containsKey(aux));
 				}
 				break;
 			case "Libros":
+				String typeL = ItemTypes.values()[2].getItemType();
 				clear();
-				Iterator<String> iter = BuildTestingSets.getItemForList1()
-						.iterator();
-				while (iter.hasNext()) {
-					String aux = iter.next();
+				Iterator<Items> iterL = OrderFacadeSubject.getInstance()
+						.itemTypeSearch(typeL).iterator();
+				while (iterL.hasNext()) {
+					String aux = iterL.next().getItemDescription();
 					addItemToList(aux, this.tableModel.containsKey(aux));
 				}
 				break;
 		}
 		
+	}
+	
+	private enum ItemTypes {
+		MUSIC("Music"), ELECTRONIC("Electronic"), BOOKS("Books");
+		
+		private String itemType;
+		
+		private ItemTypes(String type) {
+			this.itemType = type;
+		}
+		
+		public String getItemType() {
+			return this.itemType;
+		}
 	}
 }

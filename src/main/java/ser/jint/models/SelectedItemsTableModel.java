@@ -43,6 +43,10 @@ public class SelectedItemsTableModel extends AbstractTableModel {
 		return this.selectedItems.containsKey(key);
 	}
 	
+	public Integer getValue(String key) {
+		return this.selectedItems.get(key);
+	}
+	
 	public Iterator<String> getItemsSelected() {
 		return this.items.iterator();
 	}

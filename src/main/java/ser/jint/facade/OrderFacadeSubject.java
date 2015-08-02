@@ -166,11 +166,21 @@ public class OrderFacadeSubject implements Subject {
 		return this.typeCriteria.matchCriteria(itemManager.getItemsList());
 	}
 	
+	public List<Items> itemDescriptionSearch(String itemDescription) {
+		this.typeCriteria = new DescriptionItemCriteria(itemDescription);
+		return this.typeCriteria.matchCriteria(itemManager.getItemsList());
+	}
+	
 	public List<Items> idTypeSearch(int idItem) {
 		this.idCriteria = new IdItemCriteria(idItem);
 		return this.idCriteria.matchCriteria(itemManager.getItemsList());
 	}
 	// </editor-fold>
+	
+	public void addItem(Items newItem) {
+		this.itemManager = ItemManager.getInstance();
+		itemManager.addItem(newItem);
+	}
 	
 	public void updateItem(Items newItemCopy) {
 		if (itemManager.getItemsList().contains(newItemCopy)) {

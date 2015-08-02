@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -101,13 +102,13 @@ public class MainTest {
 		
 		/* ########### ITEM NUMBER 2 ############# */
 		
-		Clothes ez = new Clothes();
+		Music ez = new Music();
 		ez.setStock(25);
 		ez.setTax(0.21);
 		ez.setPrice(190);
 		ez.setItemDescription("Remera");
-		ez.setMark("Mistral");
-		ez.setSize("XL");
+		// ez.setSongs("Mistral");
+		ez.setLabel("XL");
 		ez.setItemId(ItemAutoSequence.getInstance().getNextSequence());
 		
 		detail = new OrderDetail();
@@ -117,6 +118,57 @@ public class MainTest {
 		tmp.add(detail);
 		
 		OrderFacadeSubject.getInstance().updateData(o, tmp);
+	}
+	
+	private static void createItems() throws ParseException {
+		Music ez = new Music();
+		ez.setStock(25);
+		ez.setTax(0.21);
+		ez.setPrice(190);
+		ez.setItemDescription("In This Moment - Black Widow");
+		ez.setArtist("In This Moment");
+		ez.setSongs(15);
+		ez.setLabel("Universal");
+		ez.setItemId(ItemAutoSequence.getInstance().getNextSequence());
+		
+		OrderFacadeSubject.getInstance().addItem(ez);
+		
+		Books e = new Books();
+		e.setStock(4);
+		e.setTax(0.21);
+		e.setPrice(400.00);
+		e.setItemDescription("Book of Pandas");
+		e.setEditor("Editor Books");
+		e.setPages(4500);
+		
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date d = df.parse("12/05/2014");
+		e.setPublishDate(d);
+		e.setItemId(ItemAutoSequence.getInstance().getNextSequence());
+		
+		OrderFacadeSubject.getInstance().addItem(e);
+		
+		Electronic el = new Electronic();
+		el.setStock(89);
+		el.setTax(0.21);
+		el.setPrice(3000.00);
+		el.setItemDescription("Samsung Gxy 6 LTE");
+		el.setMark("Samsung");
+		el.setType("GSM LTE");
+		el.setItemId(ItemAutoSequence.getInstance().getNextSequence());
+		
+		OrderFacadeSubject.getInstance().addItem(el);
+		
+		el = new Electronic();
+		el.setStock(89);
+		el.setTax(0.21);
+		el.setPrice(3000.00);
+		el.setItemDescription("LG G3 LTE");
+		el.setMark("LG");
+		el.setType("GSM LTE");
+		el.setItemId(ItemAutoSequence.getInstance().getNextSequence());
+		
+		OrderFacadeSubject.getInstance().addItem(el);
 	}
 	
 	public static void main(String[] args)
@@ -154,10 +206,22 @@ public class MainTest {
 		 * aux.getContextState()); }
 		 */
 
+		// createItems();
+		OrderFacadeSubject.getInstance().getRawPersistence();
+		Iterator<Items> iterator = OrderFacadeSubject.getInstance()
+				.getItemList().iterator();
+		while (iterator.hasNext()) {
+			Items axu = iterator.next();
+			System.out.println(axu);
+		}
+		
+		// OrderFacadeSubject.getInstance().rawPersistence();
 		new CreateOrder().main();
 		
-		if (Validator.isValidDNI("25337654"))
-			System.out.println("DNI valido");
+		/*
+		 * if (Validator.isValidDNI("25337654")) System.out.println("DNI valido"
+		 * );
+		 */
 
 		/*
 		 * System.out.println("Despachando ordenes");
@@ -185,7 +249,7 @@ public class MainTest {
 		 * Electronic rh = new Electronic();
 		 * 
 		 * rh.setStock(89); rh.setTax(0.21); rh.setPrice(3000.00);
-		 * rh.setItemDescription("Samsung Gxy 6 LTE"); rh.setMark("Samsung");
+		 * rh.setItemDescription("Samsung Gxy 6 LTE"); rh.setSongs("Samsung");
 		 * rh.setType("GSM LTE"); rh.setItemId(200568);
 		 * 
 		 * managerItem.addItem(rh);
@@ -193,7 +257,7 @@ public class MainTest {
 		 * rh = new Electronic();
 		 * 
 		 * rh.setStock(99); rh.setTax(0.21); rh.setPrice(1500.00);
-		 * rh.setItemDescription("LG G3 LTE"); rh.setMark("LGE"); rh.setType(
+		 * rh.setItemDescription("LG G3 LTE"); rh.setSongs("LGE"); rh.setType(
 		 * "GSM LTE"); rh.setItemId(200569);
 		 * 
 		 * managerItem.addItem(rh);
@@ -209,7 +273,7 @@ public class MainTest {
 		 * Persistable lk = (Persistable) Class.forName("ser.jint.bo." +
 		 * "Electronic").newInstance();
 		 * 
-		 * Method m = lk.getClass().getMethod("setMark", String.class);
+		 * Method m = lk.getClass().getMethod("setSongs", String.class);
 		 * 
 		 * m.invoke(lk, "Pulenta");
 		 * 

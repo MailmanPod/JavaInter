@@ -16,7 +16,7 @@ import ser.jint.bo.Order;
  */
 public class CreateOrder {
 
-    private static final int FORM_WIDTH = 650;
+	private static final int	FORM_WIDTH	= 800;
     private static final int FORM_HEIGHT = 650;
 
     public CreateOrder(){

@@ -34,7 +34,7 @@ public class WizardOrder extends WizardPanelProvider {
             case "orderItem":
 				return content.getItemsSelectionPage(wizardController);
             case "finalize":
-                return new JPanel();
+				return content.getFinishPage(wizardController);
         }
 
         return null;

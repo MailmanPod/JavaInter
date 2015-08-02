@@ -15,14 +15,14 @@ public class OtherModels {
         TableColumn column = new TableColumn();
         column.setModelIndex(SelectedItemsTableModel.ITEM_NAME_COLUMKN);
         column.setHeaderValue("Nombre");
-		column.setPreferredWidth(25);
+		column.setPreferredWidth(130);
         columnModel.addColumn(column);
 
 
         column = new TableColumn();
 		column.setModelIndex(SelectedItemsTableModel.ITEM_QUANTITY_COLUMNS);
         column.setHeaderValue("Cantidad");
-        column.setPreferredWidth(120);
+		column.setPreferredWidth(20);
 		columnModel.addColumn(column);
 		
 		return columnModel;

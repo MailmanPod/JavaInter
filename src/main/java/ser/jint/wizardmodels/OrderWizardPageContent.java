@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -13,11 +13,16 @@ import org.netbeans.spi.wizard.WizardController;
 
 import ser.jint.actions.AllItemsTableAction;
 import ser.jint.actions.SelectedItemComboAction;
+import ser.jint.bo.Items;
 import ser.jint.bo.Order;
+import ser.jint.bo.OrderDetail;
 import ser.jint.bo.Validator;
+import ser.jint.facade.OrderFacadeSubject;
 import ser.jint.models.AllItemsTableModel;
 import ser.jint.models.OtherModels;
 import ser.jint.models.SelectedItemsTableModel;
+import ser.jint.strategy.ListingStrategy;
+import ser.jint.strategy.OrderIdListing;
 
 /**
  * Created by Razor15 on 29/07/2015.
@@ -33,7 +38,11 @@ public class OrderWizardPageContent {
 	private static final Dimension	PANEL_RIGID_AREA		= new Dimension(50,
 			5);
 	private static final String[]	STRINGS					= new String[] {
-			"Libros", "Ropa", "Electronica" };
+			"Todos", "Libros", "Musica", "Electronica" };
+	private static Order					newOrder;
+	private static List<Items>				buyItems;
+	private static SelectedItemsTableModel	selectedItemsTableModel;
+	private static AllItemsTableModel		allItemsTableModel;
 	private final FocusListener		listFocusListener		= new FocusAdapter() {
 		public void focusGained(FocusEvent e) {
 			JComponent c = (JComponent) e.getComponent();
@@ -42,16 +51,14 @@ public class OrderWizardPageContent {
 		}
 	};
 	private Map						global;
-	private Order					newOrder;
 	private Action					itemAction;
 	private Action					comboAction;
-
-	private SelectedItemsTableModel	selectedItemsTableModel;
-	private AllItemsTableModel		allItemsTableModel;
 	private AllItemsTableAction		allItemsTableAction;
 	
 	public OrderWizardPageContent(Map p) {
 		global = p;
+		this.buyItems = new LinkedList<>();
+		
 	}
 	
 	public JComponent getWelcomePage(WizardController wizardController) {
@@ -102,12 +109,12 @@ public class OrderWizardPageContent {
 		lblClientIdtype.setText("Ingrese el tipo de documento del cliente");
 		lblClientIdNum.setText("Ingrese el numero de documento del cliente");
 		
-		lblClientName.setMaximumSize(this.LABEL_ITEM_DIMENSION);
-		lblClientIdtype.setMaximumSize(this.LABEL_ITEM_DIMENSION);
-		lblClientIdNum.setMaximumSize(this.LABEL_ITEM_DIMENSION);
-		txtClientName.setMaximumSize(this.TEXT_ITEM_DIMENSION);
-		txtClientIdNum.setMaximumSize(this.TEXT_ITEM_DIMENSION);
-		cmbClientIdType.setMaximumSize(this.COMBO_ITEM_DIMENSION);
+		lblClientName.setMaximumSize(LABEL_ITEM_DIMENSION);
+		lblClientIdtype.setMaximumSize(LABEL_ITEM_DIMENSION);
+		lblClientIdNum.setMaximumSize(LABEL_ITEM_DIMENSION);
+		txtClientName.setMaximumSize(TEXT_ITEM_DIMENSION);
+		txtClientIdNum.setMaximumSize(TEXT_ITEM_DIMENSION);
+		cmbClientIdType.setMaximumSize(COMBO_ITEM_DIMENSION);
 		
 		cmbClientIdType.setModel(dcbm);
 		
@@ -119,12 +126,12 @@ public class OrderWizardPageContent {
 		pnlClientData.add(lblClientName);
 		pnlClientData.add(txtClientName);
 		
-		pnlClientData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		pnlClientData.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		
 		pnlClientData.add(lblClientIdtype);
 		pnlClientData.add(cmbClientIdType);
 		
-		pnlClientData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		pnlClientData.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		
 		pnlClientData.add(lblClientIdNum);
 		pnlClientData.add(txtClientIdNum);
@@ -150,13 +157,13 @@ public class OrderWizardPageContent {
 				.format(new Date(System.currentTimeMillis())));
 		txtOrderCreationDate.setDisabledTextColor(new Color(255, 0, 0));
 		
-		lblOrderAddress.setMaximumSize(this.LABEL_ITEM_DIMENSION);
-		lblOrderZipAddress.setMaximumSize(this.LABEL_ITEM_DIMENSION);
-		lblOrderCreationDate.setMaximumSize(this.LABEL_ITEM_DIMENSION);
+		lblOrderAddress.setMaximumSize(LABEL_ITEM_DIMENSION);
+		lblOrderZipAddress.setMaximumSize(LABEL_ITEM_DIMENSION);
+		lblOrderCreationDate.setMaximumSize(LABEL_ITEM_DIMENSION);
 		// lblContactPhone.setMaximumSize(this.LABEL_ITEM_DIMENSION);
-		txtOrderAddress.setMaximumSize(this.TEXT_ITEM_DIMENSION);
-		txtOrderZipAddress.setMaximumSize(this.TEXT_ITEM_DIMENSION);
-		txtOrderCreationDate.setMaximumSize(this.TEXT_ITEM_DIMENSION);
+		txtOrderAddress.setMaximumSize(TEXT_ITEM_DIMENSION);
+		txtOrderZipAddress.setMaximumSize(TEXT_ITEM_DIMENSION);
+		txtOrderCreationDate.setMaximumSize(TEXT_ITEM_DIMENSION);
 		// txtContactPhone.setMaximumSize(this.TEXT_ITEM_DIMENSION);
 		
 		JPanel pnlOrderData = new JPanel();
@@ -167,17 +174,17 @@ public class OrderWizardPageContent {
 		pnlOrderData.add(lblOrderAddress);
 		pnlOrderData.add(txtOrderAddress);
 		
-		pnlOrderData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		pnlOrderData.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		
 		pnlOrderData.add(lblOrderZipAddress);
 		pnlOrderData.add(txtOrderZipAddress);
 		
-		pnlOrderData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		pnlOrderData.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		
 		pnlOrderData.add(lblOrderCreationDate);
 		pnlOrderData.add(txtOrderCreationDate);
 		
-		pnlOrderData.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		pnlOrderData.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		
 		/*
 		 * pnlOrderData.add(lblContactPhone); pnlOrderData.add(txtContactPhone);
@@ -250,40 +257,58 @@ public class OrderWizardPageContent {
 		conteiner.setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		
 		conteiner.add(pnlClientData);
-		conteiner.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		conteiner.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		conteiner.add(pnlOrderData);
-		conteiner.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		conteiner.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		conteiner.add(pnlValidator);
 		
 		return conteiner;
 	}
 	
-	public JComponent getItemsSelectionPage(WizardController wizardController) {
+	private void loadItems() {
+		Iterator<Items> itemsIterator = OrderFacadeSubject.getInstance()
+				.getItemList().iterator();
+				
+		while (itemsIterator.hasNext()) {
+			Items aux = itemsIterator.next();
+			allItemsTableModel.addItems(aux.getItemDescription(), false);
+		}
+	}
+	
+	public JComponent getItemsSelectionPage(
+			final WizardController wizardController) {
+		wizardController
+				.setProblem("Elija los productos a comprar para continuar");
+				
 		JPanel pnlListItems = new JPanel();
 		pnlListItems.setLayout(new BoxLayout(pnlListItems, BoxLayout.Y_AXIS));
-		pnlListItems.setMaximumSize(new Dimension(300, 300));
+		pnlListItems.setMaximumSize(new Dimension(500, 300));
 		
-		this.selectedItemsTableModel = new SelectedItemsTableModel();
-		this.allItemsTableModel = new AllItemsTableModel();
+		selectedItemsTableModel = new SelectedItemsTableModel();
+		allItemsTableModel = new AllItemsTableModel();
 		
 		this.comboAction = new SelectedItemComboAction(
-				this.selectedItemsTableModel, this.listFocusListener,
-				this.allItemsTableModel);
+selectedItemsTableModel,
+				this.listFocusListener, allItemsTableModel);
 				
 		this.allItemsTableAction = new AllItemsTableAction(
-				this.allItemsTableModel, this.selectedItemsTableModel);
+allItemsTableModel,
+				selectedItemsTableModel);
 				
-		JTable tblAllItems = new JTable(this.allItemsTableModel);
+		loadItems();
+		
+		JTable tblAllItems = new JTable(allItemsTableModel);
 		tblAllItems.setColumnModel(OtherModels.createColumnModelAll());
 		tblAllItems.addMouseListener(this.allItemsTableAction);
+		tblAllItems.setMaximumSize(new Dimension(500, 300));
 		
 		JScrollPane scrListItems = new JScrollPane(tblAllItems);
 		scrListItems.getVerticalScrollBar().setUnitIncrement(3);
-		scrListItems.setMaximumSize(new Dimension(300, 280));
+		scrListItems.setMaximumSize(new Dimension(300, 500));
 		
 		JComboBox cmbSelected = new JComboBox();
-		cmbSelected.setModel(new DefaultComboBoxModel(this.STRINGS));
-		cmbSelected.setMaximumSize(this.COMBO_ITEM_DIMENSION);
+		cmbSelected.setModel(new DefaultComboBoxModel(STRINGS));
+		cmbSelected.setMaximumSize(COMBO_ITEM_DIMENSION);
 		cmbSelected.addActionListener(this.comboAction);
 		
 		JPanel pnlContainerList = new JPanel();
@@ -298,23 +323,99 @@ public class OrderWizardPageContent {
 		JPanel pnlOrderItems = new JPanel();
 		pnlOrderItems.setLayout(new BoxLayout(pnlOrderItems, BoxLayout.Y_AXIS));
 		
-		JTable listItems = new JTable(this.selectedItemsTableModel);
+		JTable listItems = new JTable(selectedItemsTableModel);
 		listItems.setColumnModel(OtherModels.createColumnModel());
 		
 		JScrollPane scrOrderPane = new JScrollPane(listItems);
 		scrOrderPane.getVerticalScrollBar().setUnitIncrement(3);
-		scrOrderPane.setMaximumSize(new Dimension(250, 300));
+		scrOrderPane.setMaximumSize(new Dimension(300, 500));
 		
 		pnlOrderItems.add(scrOrderPane);
 		
+		/* ############## BUTTON VALIDATOR ################ */
+		JPanel pnlValidate = new JPanel();
+		pnlValidate.setLayout(new BoxLayout(pnlValidate, BoxLayout.Y_AXIS));
+		
+		JButton btnValidate = new JButton("Validar Datos");
+		btnValidate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int charge = selectedItemsTableModel.getRowCount();
+				
+				if (charge < 1) {
+					wizardController.setProblem(
+							"Para continuar debe cargar algun item");
+				} else {
+					wizardController.setProblem(null);
+				}
+			}
+		});
+		
+		pnlValidate.add(btnValidate);
+		
 		/* ############# ALL ITEMS AND SELECTED ITEMS ################## */
 		JPanel containter = new JPanel();
-		containter.setLayout(new BoxLayout(containter, BoxLayout.X_AXIS));
+		containter.setLayout(new BoxLayout(containter, BoxLayout.Y_AXIS));
 		
 		containter.add(pnlContainerList);
-		containter.add(Box.createRigidArea(this.PANEL_RIGID_AREA));
+		containter.add(Box.createRigidArea(PANEL_RIGID_AREA));
 		containter.add(pnlOrderItems);
+		containter.add(Box.createRigidArea(PANEL_RIGID_AREA));
+		containter.add(Box.createRigidArea(PANEL_RIGID_AREA));
+		containter.add(pnlValidate);
 		
 		return containter;
+	}
+	
+	public JComponent getFinishPage(WizardController wizardController) {
+		Iterator<String> iterator = selectedItemsTableModel.getItemsSelected();
+		List<OrderDetail> details = new LinkedList<>();
+		
+		while (iterator.hasNext()) {
+			String aux = iterator.next();
+			buyItems = OrderFacadeSubject.getInstance()
+					.itemDescriptionSearch(aux);
+					
+			System.out.println("Item: " + aux + " = " + buyItems.size());
+			
+			if (buyItems.size() == 1) {
+				Items input = buyItems.get(0);
+				OrderDetail detail = new OrderDetail();
+				detail.setItem(input);
+				detail.setQuantity(selectedItemsTableModel.getValue(aux));
+				details.add(detail);
+			}
+		}
+		
+		OrderFacadeSubject.getInstance().updateData(newOrder, details);
+		
+		OrderFacadeSubject.getInstance()
+				.setStrategy(new OrderIdListing(ListingStrategy.DESC));
+		Iterator<Order> orderIterator = OrderFacadeSubject.getInstance()
+				.getOrderList().iterator();
+				
+		JTextArea result = new JTextArea();
+		result.setHighlighter(null);
+		result.setLineWrap(true);
+		result.setWrapStyleWord(true);
+		result.setEditable(false);
+		
+		while (orderIterator.hasNext()) {
+			// System.out.println(orderIterator.next());
+			result.setText(orderIterator.next().toString());
+			break;
+		}
+		
+		JScrollPane scrResult = new JScrollPane(result);
+		scrResult.getVerticalScrollBar().setUnitIncrement(3);
+		scrResult.setMaximumSize(new Dimension(300, 500));
+		
+		JPanel pnlResulPanel = new JPanel();
+		pnlResulPanel.setLayout(new BoxLayout(pnlResulPanel, BoxLayout.Y_AXIS));
+		
+		pnlResulPanel.add(scrResult);
+		pnlResulPanel.add(Box.createRigidArea(PANEL_RIGID_AREA));
+		
+		return pnlResulPanel;
 	}
 }
