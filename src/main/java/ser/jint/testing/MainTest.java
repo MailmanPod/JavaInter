@@ -6,16 +6,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import ser.jint.bo.*;
 import ser.jint.builder.ItemAutoSequence;
 import ser.jint.facade.OrderFacadeSubject;
-import ser.jint.strategy.ListingStrategy;
-import ser.jint.strategy.OrderStateListing;
-import ser.jint.wizardmodels.CreateOrder;
 
 /**
  * Created by Razor15 on 16/07/2015.
@@ -127,42 +123,40 @@ public class MainTest {
 			InstantiationException, InvocationTargetException,
 			NoSuchMethodException, ParseException {
 			
-		addOrder1();
-		addOrder2();
-		
-		// OrderFacadeSubject.getInstance().serialize();
-		// OrderFacadeSubject.getInstance().deSerialize();
-		 OrderFacadeSubject.getInstance().rawPersistence();
-		//OrderFacadeSubject.getInstance().getRawPersistence();
-		addOrder2();
-		
-		List<Order> orderListing = OrderFacadeSubject.getInstance()
-				.getOrderList();
-				
-		Iterator<Order> iter = orderListing.iterator();
-		
-		while (iter.hasNext()) {
-			Order z = iter.next();
-			System.out.println(z);
-		}
-		
-		OrderFacadeSubject.getInstance()
-				.setStrategy(new OrderStateListing(ListingStrategy.DESC));
-		OrderFacadeSubject.getInstance().strategyOrders();
-		
-		orderListing = OrderFacadeSubject.getInstance().getOrderList();
-		
-		iter = orderListing.iterator();
-		
-		while (iter.hasNext()) {
-			Order aux = iter.next();
-			System.out.println("Order: " + aux.getOrderNumber() + " Date: "
-					+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-					.format(aux.getCreationDate())
-					+ " State: " + aux.getContextState());
-		}
+		/*
+		 * addOrder1(); addOrder2();
+		 * 
+		 * // OrderFacadeSubject.getInstance().serialize(); //
+		 * OrderFacadeSubject.getInstance().deSerialize();
+		 * OrderFacadeSubject.getInstance().rawPersistence();
+		 * //OrderFacadeSubject.getInstance().getRawPersistence(); addOrder2();
+		 * 
+		 * List<Order> orderListing = OrderFacadeSubject.getInstance()
+		 * .getOrderList();
+		 * 
+		 * Iterator<Order> iter = orderListing.iterator();
+		 * 
+		 * while (iter.hasNext()) { Order z = iter.next();
+		 * System.out.println(z); }
+		 * 
+		 * OrderFacadeSubject.getInstance() .setStrategy(new
+		 * OrderStateListing(ListingStrategy.DESC));
+		 * OrderFacadeSubject.getInstance().strategyOrders();
+		 * 
+		 * orderListing = OrderFacadeSubject.getInstance().getOrderList();
+		 * 
+		 * iter = orderListing.iterator();
+		 * 
+		 * while (iter.hasNext()) { Order aux = iter.next(); System.out.println(
+		 * "Order: " + aux.getOrderNumber() + " Date: " + new SimpleDateFormat(
+		 * "dd/MM/yyyy HH:mm:ss") .format(aux.getCreationDate()) + " State: " +
+		 * aux.getContextState()); }
+		 */
 
-		new CreateOrder().main();
+		// new CreateOrder().main();
+		
+		if (Validator.isValidDNI("25337654"))
+			System.out.println("DNI valido");
 
 		/*
 		 * System.out.println("Despachando ordenes");

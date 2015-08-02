@@ -40,4 +40,12 @@ public class BuildTestingSets {
         return resultSet;
     }
 
+	public static List<String> getAll() {
+		List<String> all = new ArrayList<>();
+		all.addAll(getItemForList());
+		all.addAll(getItemForList1());
+		
+		return all;
+	}
+	
 }

@@ -15,14 +15,32 @@ public class OtherModels {
         TableColumn column = new TableColumn();
         column.setModelIndex(SelectedItemsTableModel.ITEM_NAME_COLUMKN);
         column.setHeaderValue("Nombre");
-        column.setPreferredWidth(26);
+		column.setPreferredWidth(25);
         columnModel.addColumn(column);
 
 
         column = new TableColumn();
-        column.setModelIndex(SelectedItemsTableModel.ITEM_QUENTITY_COLUMNS);
+		column.setModelIndex(SelectedItemsTableModel.ITEM_QUANTITY_COLUMNS);
         column.setHeaderValue("Cantidad");
         column.setPreferredWidth(120);
+		columnModel.addColumn(column);
+		
+		return columnModel;
+	}
+	
+	public static TableColumnModel createColumnModelAll() {
+		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
+		
+		TableColumn column = new TableColumn();
+		column.setModelIndex(SelectedItemsTableModel.ITEM_NAME_COLUMKN);
+		column.setHeaderValue("Item");
+		column.setPreferredWidth(50);
+		columnModel.addColumn(column);
+		
+		column = new TableColumn();
+		column.setModelIndex(SelectedItemsTableModel.ITEM_QUANTITY_COLUMNS);
+		column.setHeaderValue("Seleccion");
+		column.setPreferredWidth(5);
         columnModel.addColumn(column);
 
         return columnModel;

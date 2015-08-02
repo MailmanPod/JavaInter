@@ -1,6 +1,7 @@
 package ser.jint.models;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -12,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
 public class SelectedItemsTableModel extends AbstractTableModel {
 	
 	public static final int	ITEM_NAME_COLUMKN		= 0;
-	public static final int	ITEM_QUENTITY_COLUMNS	= 1;
+	public static final int	ITEM_QUANTITY_COLUMNS	= 1;
 	
 	private Vector<String>			items;
 	private Map<String, Integer>	selectedItems;
@@ -38,6 +39,14 @@ public class SelectedItemsTableModel extends AbstractTableModel {
 		fireTableRowsDeleted(index, index);
 	}
 	
+	public Boolean containsKey(String key) {
+		return this.selectedItems.containsKey(key);
+	}
+	
+	public Iterator<String> getItemsSelected() {
+		return this.items.iterator();
+	}
+	
 	@Override
 	public int getRowCount() {
 		return this.items.size();
@@ -59,7 +68,7 @@ public class SelectedItemsTableModel extends AbstractTableModel {
 		switch (columnIndex) {
 			case ITEM_NAME_COLUMKN:
 				return key;
-			case ITEM_QUENTITY_COLUMNS:
+			case ITEM_QUANTITY_COLUMNS:
 				return value;
 		}
 		
