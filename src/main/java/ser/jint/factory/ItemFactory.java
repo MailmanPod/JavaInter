@@ -10,7 +10,7 @@ import ser.jint.bo.Music;
 public abstract class ItemFactory {
 	
 	public static final int	BOOKS		= 1;
-	public static final int	CLOTHES		= 2;
+	public static final int	MUSIC		= 2;
 	public static final int	ELECTRONIC	= 3;
 	
 	public static ItemFactory getItemFactory(int factoryType) {
@@ -18,8 +18,8 @@ public abstract class ItemFactory {
 			case BOOKS:
 				return new BooksFactory();
 				
-			case CLOTHES:
-				return new ClothesFactory();
+			case MUSIC:
+				return new MusicFactory();
 				
 			case ELECTRONIC:
 				return new ElectronicFactory();
@@ -31,7 +31,7 @@ public abstract class ItemFactory {
 	
 	public abstract Books getBooks();
 	
-	public abstract Music getClothes();
+	public abstract Music getMusic();
 	
 	public abstract Electronic getElectronic();
 }

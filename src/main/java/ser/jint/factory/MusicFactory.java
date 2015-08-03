@@ -7,14 +7,14 @@ import ser.jint.bo.Music;
 /**
  * Created by Razor15 on 15/07/2015.
  */
-public class ClothesFactory extends ItemFactory {
+public class MusicFactory extends ItemFactory {
 	@Override
 	public Books getBooks() {
 		return null;
 	}
 	
 	@Override
-	public Music getClothes() {
+	public Music getMusic() {
 		return new Music();
 	}
 	

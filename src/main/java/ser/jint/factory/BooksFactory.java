@@ -15,7 +15,7 @@ public class BooksFactory extends ItemFactory {
 	}
 	
 	@Override
-	public Music getClothes() {
+	public Music getMusic() {
 		return null;
 	}
 	
