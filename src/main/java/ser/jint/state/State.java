@@ -14,7 +14,7 @@ public interface State extends Serializable {
 	String	DISPATCH_STATE	= "Dispatched";
 	String	DELIVERED_STATE	= "Delivered";
 	String	CANCELED_STATE	= "Canceled";
-	String	NOT_ASSIGNED	= "Not Assigned yet";
+	String	NOT_ASSIGNED	= "Centro de Distribucion";
 	
 	void assignDetails(List<OrderDetail> details);
 	

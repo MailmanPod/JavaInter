@@ -39,7 +39,6 @@ public class OrderWizardPageContent {
 			5);
 	private static final String[]	STRINGS					= new String[] {
 			"Todos", "Libros", "Musica", "Electronica" };
-	private static Order					newOrder;
 	private static List<Items>				buyItems;
 	private static SelectedItemsTableModel	selectedItemsTableModel;
 	private static AllItemsTableModel		allItemsTableModel;
@@ -50,6 +49,7 @@ public class OrderWizardPageContent {
 					new Rectangle(0, 0, c.getWidth(), c.getHeight()));
 		}
 	};
+	private Order							newOrder;
 	private Map						global;
 	private Action					itemAction;
 	private Action					comboAction;
@@ -58,7 +58,7 @@ public class OrderWizardPageContent {
 	public OrderWizardPageContent(Map p) {
 		global = p;
 		this.buyItems = new LinkedList<>();
-		
+		newOrder = new Order();
 	}
 	
 	public JComponent getWelcomePage(WizardController wizardController) {
@@ -227,7 +227,7 @@ public class OrderWizardPageContent {
 				} else {
 					wizardController.setProblem(null);
 					
-					newOrder = new Order();
+					// newOrder = new Order();
 					newOrder.setClientName(txtClientName.getText());
 					newOrder.setClientIdentificationNumber(
 							new Integer(txtClientIdNum.getText()));

@@ -51,4 +51,8 @@ public class ItemAutoSequence implements Serializable, Sequencer {
 	public int getNextSequence() {
 		return this.sequencer.getAndIncrement();
 	}
+	
+	public void setNextSequence(Integer seq) {
+		this.sequencer = new AtomicInteger(seq);
+	}
 }

@@ -51,4 +51,8 @@ public final class OrderAutoSequence implements Serializable, Sequencer {
 	public int getNextSequence() {
 		return atomic.getAndIncrement();
 	}
+	
+	public void setNextSequence(Integer seq) {
+		this.atomic = new AtomicInteger(seq);
+	}
 }

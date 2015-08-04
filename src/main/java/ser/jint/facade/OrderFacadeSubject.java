@@ -151,8 +151,8 @@ public class OrderFacadeSubject implements Subject {
 	}
 	
 	public List<Order> orderNumberSearch(int orderNmb) {
-		this.orderNumberOrders = new ClientNumberOrderCriteria(orderNmb);
-		return this.clientNumberOrders
+		this.orderNumberOrders = new OrderNumberOrderCriteria(orderNmb);
+		return this.orderNumberOrders
 				.matchCriteria(orderManager.getOrderList());
 	}
 	
@@ -218,25 +218,54 @@ public class OrderFacadeSubject implements Subject {
 		CsvPersistence csv = new CsvPersistence();
 		
 		ObjectSerializer os = new ObjectSerializer();
-		os.serializeObjects(this.orderManager, ObjectSerializer.SERIAL_ORDER);
-		os.serializeObjects(this.itemManager, ObjectSerializer.SERIAL_ITEMS);
-		csv.persistObjects(CsvPersistence.FILE_NAME_SEQUENCER,
-				OrderAutoSequence.getInstance(),
-				ItemAutoSequence.getInstance());
+		os.serializeObjects(this.orderManager.getOrderList(),
+				ObjectSerializer.SERIAL_ORDER);
+		os.serializeObjects(this.itemManager.getItemsList(),
+				ObjectSerializer.SERIAL_ITEMS);
+		/*
+		 * csv.persistObjects(CsvPersistence.FILE_NAME_SEQUENCER,
+		 * OrderAutoSequence.getInstance(), ItemAutoSequence.getInstance());
+		 */
+		
+		os.serializeObjects(ItemAutoSequence.getInstance().getNextSequence(),
+				ObjectSerializer.SERIAL_AUTO_ITEM);
+		os.serializeObjects(OrderAutoSequence.getInstance().getNextSequence(),
+				ObjectSerializer.SERIAL_AUTO_ORDER);
 	}
 	
 	public void deSerialize() throws IllegalAccessException,
 			InvocationTargetException, IOException, InstantiationException,
 			NoSuchMethodException, ClassNotFoundException {
+			
 		CsvPersistence csv = new CsvPersistence();
 		ObjectSerializer os = new ObjectSerializer();
-		this.orderManager = (OrderManager) os
-				.deserializeObject(ObjectSerializer.SERIAL_ORDER);
-		this.itemManager = (ItemManager) os
-				.deserializeObject(ObjectSerializer.SERIAL_ITEMS);
+		
+		/*
+		 * this.orderManager = (OrderManager) os
+		 * .deserializeObject(ObjectSerializer.SERIAL_ORDER);
+		 */
+		
+		this.orderManager = OrderManager.getInstance();
+		this.orderManager.setOrderList((List<Order>) os
+				.deserializeObject(ObjectSerializer.SERIAL_ORDER));
 				
-		csv.recreateObjects(CsvPersistence.FILE_NAME_SEQUENCER,
-				CsvPersistence.AUTO_PATH, true);
+		/*
+		 * this.itemManager = (ItemManager) os
+		 * .deserializeObject(ObjectSerializer.SERIAL_ITEMS);
+		 */
+		
+		this.itemManager = ItemManager.getInstance();
+		this.itemManager.setItemList((List<Items>) os
+				.deserializeObject(ObjectSerializer.SERIAL_ITEMS));
+				
+		/*
+		 * csv.recreateObjects(CsvPersistence.FILE_NAME_SEQUENCER,
+		 * CsvPersistence.AUTO_PATH, true);
+		 */
+		OrderAutoSequence.getInstance().setNextSequence((Integer) os
+				.deserializeObject(ObjectSerializer.SERIAL_AUTO_ORDER));
+		ItemAutoSequence.getInstance().setNextSequence((Integer) os
+				.deserializeObject(ObjectSerializer.SERIAL_AUTO_ITEM));
 	}
 	// </editor-fold>
 }

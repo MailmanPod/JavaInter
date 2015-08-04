@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -177,43 +176,49 @@ public class MainTest {
 			NoSuchMethodException, ParseException {
 			
 		/*
-		 * addOrder1(); addOrder2();
-		 * 
-		 * // OrderFacadeSubject.getInstance().serialize(); //
-		 * OrderFacadeSubject.getInstance().deSerialize();
-		 * OrderFacadeSubject.getInstance().rawPersistence();
-		 * //OrderFacadeSubject.getInstance().getRawPersistence(); addOrder2();
-		 * 
+		 * addOrder1(); addOrder2(); addOrder1();
+		 */
+		
+		// OrderFacadeSubject.getInstance().serialize(); //
+		// OrderFacadeSubject.getInstance().deSerialize();
+		// OrderFacadeSubject.getInstance().rawPersistence();
+		// OrderFacadeSubject.getInstance().getRawPersistence(); addOrder2();
+		
+		/*
 		 * List<Order> orderListing = OrderFacadeSubject.getInstance()
 		 * .getOrderList();
+		 * 
+		 * orderListing =
+		 * OrderFacadeSubject.getInstance().orderNumberSearch(1000);
 		 * 
 		 * Iterator<Order> iter = orderListing.iterator();
 		 * 
 		 * while (iter.hasNext()) { Order z = iter.next();
 		 * System.out.println(z); }
-		 * 
-		 * OrderFacadeSubject.getInstance() .setStrategy(new
-		 * OrderStateListing(ListingStrategy.DESC));
-		 * OrderFacadeSubject.getInstance().strategyOrders();
-		 * 
-		 * orderListing = OrderFacadeSubject.getInstance().getOrderList();
-		 * 
-		 * iter = orderListing.iterator();
-		 * 
+		 */
+		
+		// OrderFacadeSubject.getInstance() .setStrategy(new
+		// OrderStateListing(ListingStrategy.DESC));
+		// OrderFacadeSubject.getInstance().strategyOrders();
+		
+		// orderListing = OrderFacadeSubject.getInstance().getOrderList();
+		
+		// iter = orderListing.iterator();
+		
+		/*
 		 * while (iter.hasNext()) { Order aux = iter.next(); System.out.println(
 		 * "Order: " + aux.getOrderNumber() + " Date: " + new SimpleDateFormat(
 		 * "dd/MM/yyyy HH:mm:ss") .format(aux.getCreationDate()) + " State: " +
 		 * aux.getContextState()); }
 		 */
-
-		createItems();
+		
+		// createItems();
 		// OrderFacadeSubject.getInstance().getRawPersistence();
-		Iterator<Items> iterator = OrderFacadeSubject.getInstance()
-				.getItemList().iterator();
-		while (iterator.hasNext()) {
-			Items axu = iterator.next();
-			System.out.println(axu);
-		}
+		/*
+		 * Iterator<Items> iterator = OrderFacadeSubject.getInstance()
+		 * .getItemList().iterator(); while (iterator.hasNext()) { Items axu =
+		 * iterator.next(); System.out.println(axu); }
+		 */
 		
 		// OrderFacadeSubject.getInstance().rawPersistence();
 		new CreateOrder().main();
@@ -222,7 +227,7 @@ public class MainTest {
 		 * if (Validator.isValidDNI("25337654")) System.out.println("DNI valido"
 		 * );
 		 */
-
+		
 		/*
 		 * System.out.println("Despachando ordenes");
 		 * ofs.dispathOrders(manager.getOrderList()); iter =
